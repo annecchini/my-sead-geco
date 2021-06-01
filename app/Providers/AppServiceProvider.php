@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Schema;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +24,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        //Prevenir erros ao usar asset() no heroku
+        if (config('app.env') === 'production') {
+            \URL::forceScheme('https');
+        }
+
+        //Prevenir erros de column size em migrations no heroku
+        Schema::defaultStringLength(191);
+
     }
 }
