@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pessoa;
+use App\Models\Person;
 use Illuminate\Http\Request;
 
-class PessoaController extends Controller
+class PersonController extends Controller
 {
+
+    public function __construct(){
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,6 +20,7 @@ class PessoaController extends Controller
     public function index()
     {
         //
+        return "Person index...";
     }
 
     /**
@@ -25,6 +31,7 @@ class PessoaController extends Controller
     public function create()
     {
         //
+        return "Person create...";
     }
 
     /**
@@ -41,10 +48,10 @@ class PessoaController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Pessoa  $pessoa
+     * @param  \App\Models\Person  $person
      * @return \Illuminate\Http\Response
      */
-    public function show(Pessoa $pessoa)
+    public function show(Person $person)
     {
         //
     }
@@ -52,22 +59,23 @@ class PessoaController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Pessoa  $pessoa
+     * @param  \App\Models\Person  $person
      * @return \Illuminate\Http\Response
      */
-    public function edit(Pessoa $pessoa)
+    public function edit(Person $person)
     {
         //
+        return "Person edit...";
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Pessoa  $pessoa
+     * @param  \App\Models\Person  $person
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Pessoa $pessoa)
+    public function update(Request $request, Person $person)
     {
         //
     }
@@ -75,10 +83,10 @@ class PessoaController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Pessoa  $pessoa
+     * @param  \App\Models\Person  $person
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Pessoa $pessoa)
+    public function destroy(Person $person)
     {
         //
     }
