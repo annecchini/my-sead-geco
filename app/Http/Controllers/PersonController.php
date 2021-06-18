@@ -8,7 +8,11 @@ use Illuminate\Http\Request;
 class PersonController extends Controller
 {
 
-    public function __construct(){
+    public function __construct(Person $person){
+        //
+        $this->person = $person;
+
+        //middleware
         $this->middleware('auth');
     }
 
@@ -20,7 +24,8 @@ class PersonController extends Controller
     public function index()
     {
         //
-        return "Person index...";
+        $people = Person::paginate(10);
+        return view('person.index', ['people' => $people]);
     }
 
     /**
@@ -31,7 +36,7 @@ class PersonController extends Controller
     public function create()
     {
         //
-        return "Person create...";
+        return view('person.create');
     }
 
     /**
@@ -42,7 +47,13 @@ class PersonController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //dd($request->all());
+
+        //field validation
+        $request->validate($this->person->rules(), $this->person->feedback());
+
+        $person = Person::create($request->all());
+        return redirect()->route('person.show', [ 'person' => $person->id ]);
     }
 
     /**
@@ -54,6 +65,7 @@ class PersonController extends Controller
     public function show(Person $person)
     {
         //
+        return view('person.show', ['person' => $person]);
     }
 
     /**
@@ -65,7 +77,7 @@ class PersonController extends Controller
     public function edit(Person $person)
     {
         //
-        return "Person edit...";
+        return view('person.edit', ['person' => $person]);
     }
 
     /**
@@ -75,9 +87,17 @@ class PersonController extends Controller
      * @param  \App\Models\Person  $person
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Person $person)
+    public function update(Request $request, $id)
     {
-        //
+        //load resource
+        $person = $this->person->find($id);
+
+        //field validation
+        $request->validate($person->rules(), $person->feedback());
+
+        //do the thing
+        $person->update($request->all());
+        return redirect()->route('person.show', ['person' => $person->id ]);
     }
 
     /**
@@ -89,5 +109,7 @@ class PersonController extends Controller
     public function destroy(Person $person)
     {
         //
+        $person->delete();
+        return redirect()->route('person.index', [ 'person' => $person->id ]);
     }
 }
