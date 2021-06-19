@@ -19,7 +19,11 @@ class AlterUsersTable extends Migration
         try {
             Schema::table('users', function(Blueprint $table){
                 $table->dropColumn('name');
-            });  
+                $table->unsignedBigInteger('person_id')->after('id');
+
+                //constraint
+                $table->foreign('person_id')->references('id')->on('people');
+            });
         
             DB::commit();
 
@@ -40,13 +44,17 @@ class AlterUsersTable extends Migration
         //
         DB::beginTransaction();
         try {
+
+            //remove contraint
+            Schema::table('produto_detalhes', function(Blueprint $table) {
+                $table->dropForeign('users_person_id_foreign'); //[table]_[column]_foreign;
+                $table->dropColumn('person_id');
+            });
+
             Schema::table('users', function(Blueprint $table){
                 $table->string('name')->default('Lost on migration up...')->after('id');
-            });
-    
-            Schema::table('users', function(Blueprint $table){
                 $table->string('name')->default(null)->change();
-            }); 
+            });
         
             DB::commit();
 

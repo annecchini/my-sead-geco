@@ -8,10 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Person extends Model
 {
     use HasFactory;
-    protected $fillable = ['nome', 'cpf'];
+    protected $fillable = ['person_id', 'nome', 'cpf'];
 
-    public function me(){
-        return $this;
+    public function user(){
+        return $this->hasOne('App\Models\User');
     }
 
     public function rules() {
