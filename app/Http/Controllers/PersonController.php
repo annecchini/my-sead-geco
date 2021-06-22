@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Person;
 use Illuminate\Http\Request;
+use App\Models\Person;
 
 class PersonController extends Controller
 {
@@ -47,8 +47,6 @@ class PersonController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request->all());
-
         //field validation
         $request->validate($this->person->rules(), $this->person->feedback());
 
@@ -109,7 +107,13 @@ class PersonController extends Controller
     public function destroy(Person $person)
     {
         //
+
+        //cant delete if have constraint
+        if($person->user){
+            return redirect()->route('person.index')->withErrors(['message'=>'Erro: Colaborador não pode ser excluido pois possui usuário(s) associado(s).']);
+        }
+
         $person->delete();
-        return redirect()->route('person.index', [ 'person' => $person->id ]);
+        return redirect()->route('person.index');
     }
 }

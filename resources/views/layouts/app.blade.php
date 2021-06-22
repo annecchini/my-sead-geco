@@ -62,6 +62,11 @@
                             <a href="{{ route('person.index') }}" class="nav-link">Colaboradores</a>
                         </li>
 
+                        {{-- link de Pessoas --}}
+                        <li class="nav-item">
+                            <a href="{{ route('user.index') }}" class="nav-link">Usuários</a>
+                        </li>
+
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

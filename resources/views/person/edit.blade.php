@@ -19,11 +19,11 @@
                         @method('PUT')
 
                         <div class="form-group">
-                            <label for="nomeInput">Nome</label>
-                            <input type="text" class="form-control {{ $errors->has('nome') ? 'is-invalid' : ''}}"
-                                id="nomeInput" name="nome" value="{{ old('nome', $person->nome) }}">
-                            @if( $errors->has('nome') )
-                            <div class="invalid-feedback">{{ $errors->first('nome') }}</div>
+                            <label for="nameInput">Nome</label>
+                            <input type="text" class="form-control {{ $errors->has('name') ? 'is-invalid' : ''}}"
+                                id="nameInput" name="name" value="{{ old('name', $person->name) }}">
+                            @if( $errors->has('name') )
+                            <div class="invalid-feedback">{{ $errors->first('name') }}</div>
                             @endif
                         </div>
 

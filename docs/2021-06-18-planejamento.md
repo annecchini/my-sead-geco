@@ -1,11 +1,11 @@
 # tarefas atuais
 
--   Criar crud para users
--   checar possiveis problemas de deleção
--   alterar nome para name em people
-
 # Possiveis para trás
+
+-   Caixa ou tela de confirmação para delete.
 
 # Possiveis passos para frente
 
--   Colocar username on users (obrigatório e no CRUD, sem ressitrar-se por enquanto).
+-   Implementar a feature de documentos?
+-   Implementar a feature de Vinculação?
+-   Colocar username on users (para poder usar o LDAP mo futuro?).

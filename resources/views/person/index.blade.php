@@ -4,6 +4,18 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
+
+            @if ($errors->any())
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                @foreach ($errors->all() as $error)
+                {{ $error }}
+                @endforeach
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @endif
+
             <div class="card">
 
                 <div class="card-header">
@@ -14,39 +26,40 @@
                 <div class="card-body">
 
                     @if($people->count() > 0)
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>CPF</th>
-                                <th>Nome</th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>CPF</th>
+                                    <th>Nome</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
 
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ( $people as $person )
-                            <tr>
-                                <td>{{ $person->cpf }}</td>
-                                <td>{{ $person->nome }}</td>
-                                <td><a href="{{ route('person.show', ['person' => $person->id]) }}">Ver</a></td>
-                                <td><a href="{{ route('person.edit', ['person' => $person->id]) }}">Editar</a></td>
-                                <td>
-                                    <form id="form_{{$person->id}}" method="post"
-                                        action="{{ route('person.destroy', ['person' => $person->id] )}}">
-                                        @csrf
-                                        @method('DELETE')
-                                    </form>
-                                    <a href="#" onclick="document.getElementById('form_{{$person->id}}').submit()">
-                                        Excluir
-                                    </a>
-                                </td>
-
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ( $people as $person )
+                                <tr>
+                                    <td>{{ $person->cpf }}</td>
+                                    <td>{{ $person->name }}</td>
+                                    <td><a href="{{ route('person.show', ['person' => $person->id]) }}">Ver</a></td>
+                                    <td><a href="{{ route('person.edit', ['person' => $person->id]) }}">Editar</a></td>
+                                    <td>
+                                        <form id="form_{{$person->id}}" method="post"
+                                            action="{{ route('person.destroy', ['person' => $person->id] )}}">
+                                            @csrf
+                                            @method('DELETE')
+                                        </form>
+                                        <a href="#" onclick="document.getElementById('form_{{$person->id}}').submit()">
+                                            Excluir
+                                        </a>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
 
                     <nav>
                         <ul class="pagination">

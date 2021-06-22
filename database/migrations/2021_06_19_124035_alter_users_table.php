@@ -45,13 +45,11 @@ class AlterUsersTable extends Migration
         DB::beginTransaction();
         try {
 
-            //remove contraint
-            Schema::table('produto_detalhes', function(Blueprint $table) {
-                $table->dropForeign('users_person_id_foreign'); //[table]_[column]_foreign;
-                $table->dropColumn('person_id');
-            });
-
             Schema::table('users', function(Blueprint $table){
+                //remove contraint
+                $table->dropForeign('users_person_id_foreign'); //[table]_[column]_foreign;
+                
+                $table->dropColumn('person_id');
                 $table->string('name')->default('Lost on migration up...')->after('id');
                 $table->string('name')->default(null)->change();
             });
