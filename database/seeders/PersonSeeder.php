@@ -17,7 +17,7 @@ class PersonSeeder extends Seeder
         //Person Fernando
         $person = new Person();
         $person->id = 1;
-        $person->nome = 'Fernando Lyrio Annecchini';
+        $person->name = 'Fernando Lyrio Annecchini';
         $person->cpf = '088.402.807-07';
         $person->save();
     }

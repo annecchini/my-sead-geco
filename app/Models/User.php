@@ -6,10 +6,19 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class User extends Authenticatable
+
+class User extends Authenticatable implements Auditable
 {
     use HasFactory, Notifiable;
+    use \OwenIt\Auditing\Auditable;
+
+    protected $auditInclude = [
+        'person_id',
+        'email',
+        'password',
+    ];
 
     /**
      * The attributes that are mass assignable.
