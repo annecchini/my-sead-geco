@@ -46,12 +46,16 @@
                                     <td><a href="{{ route('person.show', ['person' => $person->id]) }}">Ver</a></td>
                                     <td><a href="{{ route('person.edit', ['person' => $person->id]) }}">Editar</a></td>
                                     <td>
-                                        <form id="form_{{$person->id}}" method="post"
-                                            action="{{ route('person.destroy', ['person' => $person->id] )}}">
-                                            @csrf
-                                            @method('DELETE')
+                                        {{-- <form id="form_{{$person->id}}" method="post"
+                                        action="{{ route('person.destroy', ['person' => $person->id] )}}">
+                                        @csrf
+                                        @method('DELETE')
                                         </form>
                                         <a href="#" onclick="document.getElementById('form_{{$person->id}}').submit()">
+                                            Excluir
+                                        </a> --}}
+                                        <a href="#"
+                                            onclick="showDeleteModal({action:'{{ route('person.destroy', ['person' => $person->id]) }}'});">
                                             Excluir
                                         </a>
                                     </td>
@@ -83,11 +87,6 @@
                     <p>Sem colaboradores para exibir</p>
                     @endif
 
-
-
-
-
-
                 </div>
 
             </div>
@@ -96,4 +95,44 @@
         </div>
     </div>
 </div>
+
+<!-- DeleteModal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form method="POST" id="deleteForm" action="">
+                @csrf
+                @method('DELETE')
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Excluir colaborador</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    Tem certeza que deseja remover este colaborador?
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Não! Cancelar</button>
+                    <button type="submit" class="btn btn-danger">Sim! Confirmar</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+@endsection
+
+@section('page-js-script')
+<script type="text/javascript">
+    function showDeleteModal(options){
+        $('#deleteForm').attr('action', options.action);
+        $('#deleteModal').modal('show');
+    }
+</script>
 @endsection

@@ -2,8 +2,6 @@
 
 # Possiveis para trás
 
--   Caixa ou tela de confirmação para delete.
-
 # Possiveis passos para frente
 
 -   Implementar a feature de documentos?

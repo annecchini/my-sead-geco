@@ -49,7 +49,7 @@ class User extends Authenticatable
     public function rules($options = []) {
 
         $rules = [
-            'person_id' => 'required|exists:users,id',
+            'person_id' => 'required|exists:people,id',
             'email' => 'required|email|unique:users,email,'.$this->id.'',
             'password' => 'required|min:8'
         ];

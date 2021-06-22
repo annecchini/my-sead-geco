@@ -7,7 +7,7 @@
             <div class="card">
 
                 <div class="card-header">
-                    {{ __('Colaborador') }}
+                    {{ __('Usuário') }}
                 </div>
 
                 <div class="card-body">
