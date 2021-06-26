@@ -57,12 +57,12 @@
                         @endif
                         @else
 
-                        {{-- link de Pessoas --}}
+                        {{-- link de Person --}}
                         <li class="nav-item">
                             <a href="{{ route('person.index') }}" class="nav-link">Colaboradores</a>
                         </li>
 
-                        {{-- link de Pessoas --}}
+                        {{-- link de User --}}
                         <li class="nav-item">
                             <a href="{{ route('user.index') }}" class="nav-link">Usuários</a>
                         </li>

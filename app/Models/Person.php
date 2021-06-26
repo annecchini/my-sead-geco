@@ -15,7 +15,7 @@ class Person extends Model implements Auditable
     protected $auditInclude = ['person_id', 'name', 'cpf'];
 
     public function user(){
-        return $this->hasOne('App\Models\User');
+        return $this->hasMany('App\Models\User');
     }
 
     public function rules() {

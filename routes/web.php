@@ -25,4 +25,5 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::resource('person', 'PersonController');
 Route::resource('user', 'UserController');
+Route::resource('document', 'DocumentController');
 
