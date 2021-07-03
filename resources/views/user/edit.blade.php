@@ -7,7 +7,7 @@
             <div class="card">
 
                 <div class="card-header">
-                    {{ __('Cadastrar usuário') }}
+                    {{ __('Editar usuário') }}
                 </div>
 
                 <div class="card-body">
@@ -19,7 +19,7 @@
                         @method('PUT')
 
                         <div class="form-group">
-                            <label for="emailInput">E-mail</label>
+                            <label for="emailInput">E-mail *</label>
                             <input type="text" class="form-control {{ $errors->has('email') ? 'is-invalid' : ''}}"
                                 id="emailInput" name="email" value="{{ old('email', $user->email) }}">
                             @if( $errors->has('email') )
@@ -38,7 +38,7 @@
 
                         <div id="optionalPassword" class="collapse">
                             <div class="form-group">
-                                <label for="passwordInput">Senha</label>
+                                <label for="passwordInput">Senha *</label>
                                 <input type="password"
                                     class="form-control {{ $errors->has('password') ? 'is-invalid' : ''}}"
                                     id="passwordInput" name="password" value="{{ old('password', '') }}">
@@ -49,7 +49,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="personInput">Colaborador responsável</label>
+                            <label for="personInput">Colaborador responsável *</label>
                             <select id="personInput"
                                 class="form-control {{ $errors->has('person_id') ? 'is-invalid' : ''}}"
                                 name="person_id">
@@ -66,7 +66,7 @@
                             @endif
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Cadastrar</button>
+                        <button type="submit" class="btn btn-primary">Atualizar</button>
                     </form>
 
 

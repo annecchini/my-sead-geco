@@ -19,7 +19,7 @@
                         @method('PUT')
 
                         <div class="form-group">
-                            <label for="nameInput">Nome</label>
+                            <label for="nameInput">Nome *</label>
                             <input type="text" class="form-control {{ $errors->has('name') ? 'is-invalid' : ''}}"
                                 id="nameInput" name="name" value="{{ old('name', $person->name) }}">
                             @if( $errors->has('name') )
@@ -28,7 +28,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="cpfInput">CPF</label>
+                            <label for="cpfInput">CPF *</label>
                             <input type="text" class="form-control {{ $errors->has('cpf') ? 'is-invalid' : ''}}"
                                 id="cpfInput" name="cpf" value="{{ old('cpf', $person->cpf) }}">
                             @if( $errors->has('cpf') )

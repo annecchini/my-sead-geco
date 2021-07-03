@@ -1,8 +1,9 @@
 # tarefas atuais
 
+-   Colocar "campo obrigatório" nas interfaces.
+
 # Possiveis para trás
 
--   Colocar "campo obrigatório" nas interfaces.
 -   Atualizar "largura" dos formulários da pagina.
 -   Implementar um PersonPicker melhor em UserCreate e UserUpdate.
 -   Criar um componente de paginação para as listas? (Evitar CTRL+C CTRL+V).
