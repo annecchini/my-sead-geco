@@ -3,12 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Models\Document;
-use Illuminate\Http\Request;
-use App\Models\Person;
 use App\Models\DocumentType;
+use App\Models\Person;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class DocumentController extends Controller
 {
+
+    public function __construct(Document $document)
+    {
+        //
+        $this->document = $document;
+
+        //middleware
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -27,20 +38,14 @@ class DocumentController extends Controller
     public function create(Request $request)
     {
         $url_person_id = $request->person_id;
-        if($url_person_id)
-            $people = Person::find($url_person_id)->get();
-        else
-            $people = Person::all();
-
+        $people = $url_person_id ? Person::where('id', $url_person_id)->get() : Person::all();
         $documentTypes = DocumentType::all();
 
-        //dd($people);
-        
         return view('document.create', [
-             'url_person_id'=>$url_person_id, 
-             'people'=>$people,
-             'documentTypes'=>$documentTypes
-            ]);
+            'url_person_id' => $url_person_id,
+            'people' => $people,
+            'documentTypes' => $documentTypes,
+        ]);
     }
 
     /**
@@ -51,7 +56,22 @@ class DocumentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //validation
+        $request->validate($this->document->rules(), $this->document->feedback());
+
+        //salvando arquivo
+        $file = $request->file('filePath');
+        $document_urn = $file->store('models/document', 'local');
+
+        //criando o model
+        $doc = $this->document->create([
+            'person_id' => $request->person_id,
+            'documentType_id' => $request->documentType_id,
+            'alias' => $request->alias,
+            'filePath' => $document_urn,
+        ]);
+
+        return redirect()->route('person.show', ['person' => $doc->person_id]);
     }
 
     /**
@@ -62,7 +82,11 @@ class DocumentController extends Controller
      */
     public function show(Document $document)
     {
-        //
+        $filePath = $document->filePath;
+        $type = str_replace('/', '-', $document->documentType->name);
+        $alias = $document->alias;
+        $fullname = $alias ? "$type - $alias" : $type;
+        return Storage::response($filePath, $fullname);
     }
 
     /**
@@ -71,9 +95,18 @@ class DocumentController extends Controller
      * @param  \App\Models\Document  $document
      * @return \Illuminate\Http\Response
      */
-    public function edit(Document $document)
+    public function edit(Request $request, Document $document)
     {
-        //
+        $url_person_id = $request->person_id;
+        $people = $url_person_id ? Person::where('id', $url_person_id)->get() : Person::all();
+        $documentTypes = DocumentType::all();
+
+        return view('document.edit', [
+            'document' => $document,
+            'url_person_id' => $url_person_id,
+            'people' => $people,
+            'documentTypes' => $documentTypes,
+        ]);
     }
 
     /**
@@ -85,7 +118,34 @@ class DocumentController extends Controller
      */
     public function update(Request $request, Document $document)
     {
-        //
+        $options = $request->filePath ? [] : ['filePath' => false];
+        $request->validate($this->document->rules($options), $this->document->feedback());
+
+        //update file if have
+        $document_urn = null;
+        if ($request->file('filePath')) {
+            //move old file
+            $basename = pathinfo($document->filePath)['basename'];
+            Storage::disk('local')->move($document->filePath, "models/document/deleted/$basename");
+
+            //save new file
+            $file = $request->file('filePath');
+            $document_urn = $file->store('models/document', 'local');
+        }
+
+        //dd($document_urn);
+
+
+        //criando o model
+        $document->fill([
+            'person_id' => $request->person_id,
+            'documentType_id' => $request->documentType_id,
+            'alias' => $request->alias,
+            'filePath' => $document_urn ? $document_urn : $document->filePath
+        ]);
+        $document->save();
+
+        return redirect()->route('person.show', ['person' => $document->person_id]);
     }
 
     /**
@@ -96,6 +156,15 @@ class DocumentController extends Controller
      */
     public function destroy(Document $document)
     {
-        //
+        //get person_id for later
+        $person_id = $document->person_id;
+
+        $basename = pathinfo($document->filePath)['basename'];
+        Storage::disk('local')->move($document->filePath, "models/document/deleted/$basename");
+
+        //deleta o modelo
+        $document->delete();
+
+        return redirect()->route('person.show', ['person' => $person_id]);
     }
 }

@@ -18,7 +18,8 @@ class CreateDocumentsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('person_id');
             $table->unsignedBigInteger('documentType_id');
-            $table->string('file');
+            $table->string('filePath');
+            $table->string('alias')->nullable();
             $table->timestamps();
 
             //fk constraints

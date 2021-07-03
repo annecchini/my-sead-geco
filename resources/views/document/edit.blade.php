@@ -7,14 +7,16 @@
             <div class="card">
 
                 <div class="card-header">
-                    {{ __('Cadastrar documento') }}
+                    {{ __('Editar documento') }}
                 </div>
 
                 <div class="card-body">
 
-                    <form method="POST" action="{{ route('document.store') }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('document.update', ['document'=>$document->id]) }}" enctype="multipart/form-data">
 
                         @csrf
+
+                        @method('PUT')
 
                         <div class="form-group">
                             <label for="personInput">Colaborador associado *</label>
@@ -24,7 +26,7 @@
                                 <option value="">-- Selecione um colaborador --</option>
                                 @foreach ( $people as $person )
                                 <option value="{{ $person->id }}"
-                                    {{ old('person_id', $url_person_id) == $person->id ? 'selected' : '' }}>
+                                    {{ old('person_id', $document->person_id) == $person->id ? 'selected' : '' }}>
                                     {{$person->name}} ({{$person->cpf}})
                                 </option>
                                 @endforeach
@@ -41,8 +43,7 @@
                                 name="documentType_id">
                                 <option value="">-- Selecione um tipo de documento --</option>
                                 @foreach ( $documentTypes as $documentType )
-                                <option value="{{ $documentType->id }}"
-                                    {{ old('documentType_id') == $documentType->id ? 'selected' : '' }}>
+                                <option value="{{ $documentType->id }}" {{ old('documentType_id', $document->documentType_id) == $documentType->id ? 'selected' : '' }}>
                                     {{$documentType->name}}
                                 </option>
                                 @endforeach
@@ -55,14 +56,14 @@
                         <div class="form-group">
                             <label for="aliasInput">Apelido</label>
                             <input type="text" class="form-control {{ $errors->has('alias') ? 'is-invalid' : ''}}"
-                                id="aliasInput" name="alias" value="{{ old('alias', '') }}">
+                                id="aliasInput" name="alias" value="{{ old('alias', $document->alias) }}">
                             @if( $errors->has('alias') )
                             <div class="invalid-feedback">{{ $errors->first('alias') }}</div>
                             @endif
                         </div>
 
                         <div class="form-group">
-                            <label for="filePathInput">Arquivo *</label>
+                            <label for="filePathInput">Arquivo <a target="_blank" href="{{route('document.show', ['document'=>$document->id])}}">(Ver arquivo atual)</a> </label>
                             <input type="file" name="filePath" class="form-control-file border rounded is-invalid"
                                 id="filePathInput">
                             @if( $errors->has('filePath') )
@@ -70,7 +71,7 @@
                             @endif
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Cadastrar</button>
+                        <button type="submit" class="btn btn-primary">Atualizar</button>
                     </form>
 
 

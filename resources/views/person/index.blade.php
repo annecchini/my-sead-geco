@@ -96,8 +96,8 @@
     </div>
 </div>
 
-<!-- DeleteModal -->
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<!-- DeletePerson Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="personModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -106,7 +106,7 @@
                 @method('DELETE')
 
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Excluir colaborador</h5>
+                    <h5 class="modal-title" id="personModalLabel">Excluir colaborador</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

@@ -51,26 +51,27 @@ class User extends Authenticatable implements Auditable
         'email_verified_at' => 'datetime',
     ];
 
-    public function person(){
+    public function person()
+    {
         return $this->belongsTo('App\Models\Person');
     }
 
-    public function rules($options = []) {
+    public function rules($options = [])
+    {
 
         $rules = [
             'person_id' => 'required|exists:people,id',
-            'email' => 'required|email|unique:users,email,'.$this->id.'',
+            'email' => 'required|email|unique:users,email,' . $this->id . '',
             'password' => 'required|min:8'
         ];
 
-        if( isset($options['password']) && $options['password'] === false){
-            unset($rules['password']);
-        }
+        if (isset($options['password']) && $options['password'] === false) unset($rules['password']);
 
         return $rules;
     }
 
-    public function feedback() {
+    public function feedback()
+    {
         return [
             //genericos
             'required' => 'O campo é obrigatório.',

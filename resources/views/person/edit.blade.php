@@ -7,7 +7,7 @@
             <div class="card">
 
                 <div class="card-header">
-                    {{ __('Cadastrar colaborador') }}
+                    {{ __('Editar colaborador') }}
                 </div>
 
                 <div class="card-body">

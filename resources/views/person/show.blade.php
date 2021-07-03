@@ -53,7 +53,40 @@
                             <a class="ml-1" href="{{route('document.create', ['person_id'=>$person->id] )}}">Novo</a>
                         </div>
 
-                        no data now...
+                        @if(count($person->documents) > 0)
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Data de criação</th>
+                                        <th>Documento</th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ( $person->documents as $document )
+                                    <tr>
+                                        <td>{{ $document->created_at->format('Y/m/d H:i:s')}}</td>
+                                        <td>
+                                            <a target="_blank" href="{{ route('document.show', ['document'=>$document->id]) }}">
+                                                {{ $document->documentType->name }} {{ $document->alias ? " ($document->alias)" : ""}}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('document.edit', ['document'=>$document->id]) }}">Editar</a>
+                                        </td>
+                                        <td>
+                                            <a href="#" onclick="showDeleteDocumentModal({action:'{{ route('document.destroy', ['document' => $document->id]) }}'});">Excluir</a>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                        </div>
+                        @else
+                        <p>Sem documentos para exibir</p>
+                        @endif
+
                     </div>
                 </div>
 
@@ -63,4 +96,46 @@
         </div>
     </div>
 </div>
+
+<!-- DeleteDocument Modal -->
+<div class="modal fade" id="deleteDocumentModal" tabindex="-1" role="dialog" aria-labelledby="documentModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form method="POST" id="deleteDocumentForm" action="">
+                @csrf
+                @method('DELETE')
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="documentModalLabel">Excluir documento</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    Tem certeza que deseja remover este documento?
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Não! Cancelar</button>
+                    <button type="submit" class="btn btn-danger">Sim! Confirmar</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+@endsection
+
+@section('page-js-script')
+
+    <script type="text/javascript">
+        function showDeleteDocumentModal(options){
+            $('#deleteDocumentForm').attr('action', options.action);
+            $('#deleteDocumentModal').modal('show');
+        }
+    </script>
+
 @endsection
