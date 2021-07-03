@@ -3,15 +3,18 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card">
 
                 <div class="card-header">
                     {{ __('Usuários') }}
-                    <a class="float-right" href="{{ route('user.create') }}">Novo</a>
                 </div>
 
                 <div class="card-body">
+
+                    <div class="mb-1 pr-1 bg-light d-flex justify-content-end">
+                        <a class="ml-1" href="{{route('user.create' )}}">Novo</a>
+                    </div>
 
                     @if($users->count() > 0)
                     <div class="table-responsive">
@@ -19,7 +22,7 @@
                             <thead>
                                 <tr>
                                     <th>E-mail</th>
-                                    <th>Nome</th>
+                                    <th>Colaborador</th>
                                     <th></th>
                                     <th></th>
                                     <th></th>

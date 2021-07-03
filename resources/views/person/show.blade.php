@@ -74,7 +74,7 @@
                                             </a>
                                         </td>
                                         <td>
-                                            <a href="{{ route('document.edit', ['document'=>$document->id]) }}">Editar</a>
+                                            <a href="{{ route('document.edit', ['document'=>$document->id, 'person_id'=>$document->person_id]) }}">Editar</a>
                                         </td>
                                         <td>
                                             <a href="#" onclick="showDeleteDocumentModal({action:'{{ route('document.destroy', ['document' => $document->id]) }}'});">Excluir</a>

@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
 
             @if ($errors->any())
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -20,10 +20,13 @@
 
                 <div class="card-header">
                     {{ __('Colaboradores') }}
-                    <a class="float-right" href="{{ route('person.create') }}">Novo</a>
                 </div>
 
                 <div class="card-body">
+
+                    <div class="mb-1 pr-1 bg-light d-flex justify-content-end">
+                        <a class="ml-1" href="{{route('person.create' )}}">Novo</a>
+                    </div>
 
                     @if($people->count() > 0)
                     <div class="table-responsive">

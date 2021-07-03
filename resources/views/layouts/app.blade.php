@@ -57,14 +57,14 @@
                         @endif
                         @else
 
-                        {{-- link de Person --}}
-                        <li class="nav-item">
-                            <a href="{{ route('person.index') }}" class="nav-link">Colaboradores</a>
-                        </li>
-
                         {{-- link de User --}}
                         <li class="nav-item">
                             <a href="{{ route('user.index') }}" class="nav-link">Usuários</a>
+                        </li>
+
+                        {{-- link de Person --}}
+                        <li class="nav-item">
+                            <a href="{{ route('person.index') }}" class="nav-link">Colaboradores</a>
                         </li>
 
                         <li class="nav-item dropdown">
