@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Person;
 use Illuminate\Http\Request;
+use App\Custom\GeCoLogger;
 
 class PersonController extends Controller
 {
@@ -51,7 +52,12 @@ class PersonController extends Controller
         //field validation
         $request->validate($this->person->rules(), $this->person->feedback());
 
+        //create
         $person = Person::create($request->all());
+
+        //log create
+        GeCoLogger::writeLog($person, 'create');
+
         return redirect()->route('person.show', ['person' => $person->id]);
     }
 
@@ -86,16 +92,17 @@ class PersonController extends Controller
      * @param  \App\Models\Person  $person
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Person $person)
     {
-        //load resource
-        $person = $this->person->find($id);
-
         //field validation
         $request->validate($person->rules(), $person->feedback());
 
         //do the thing
         $person->update($request->all());
+
+        //log update
+        GeCoLogger::writeLog($person, 'update');
+
         return redirect()->route('person.show', ['person' => $person->id]);
     }
 
@@ -107,14 +114,17 @@ class PersonController extends Controller
      */
     public function destroy(Person $person)
     {
-        //
 
         //cant delete if have constraint
-        if ($person->user) {
+        if ($person->users->count()) {
             return redirect()->route('person.index')->withErrors(['message' => 'Erro: Colaborador não pode ser excluido pois possui usuário(s) associado(s).']);
         }
 
         $person->delete();
+
+        //log delete
+        GeCoLogger::writeLog($person, 'destroy');
+
         return redirect()->route('person.index');
     }
 }

@@ -6,11 +6,13 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Person;
 use Illuminate\Support\Facades\Hash;
+use App\Custom\GeCoLogger;
 
 class UserController extends Controller
 {
 
-    public function __construct(User $user){
+    public function __construct(User $user)
+    {
         //
         $this->user = $user;
 
@@ -40,7 +42,7 @@ class UserController extends Controller
     {
         //
         $people = Person::all();
-        return view('user.create', [ 'people' => $people ]);
+        return view('user.create', ['people' => $people]);
     }
 
     /**
@@ -61,7 +63,11 @@ class UserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password)
         ]);
-        return redirect()->route('user.show', [ 'user' => $user->id ]);
+
+        //log create
+        GeCoLogger::writeLog($user, 'create');
+
+        return redirect()->route('user.show', ['user' => $user->id]);
     }
 
     /**
@@ -73,7 +79,7 @@ class UserController extends Controller
     public function show(User $user)
     {
         //
-        return view('user.show', ['user'=>$user]);
+        return view('user.show', ['user' => $user]);
     }
 
     /**
@@ -86,7 +92,7 @@ class UserController extends Controller
     {
         //
         $people = Person::all();
-        return view('user.edit', [ 'people' => $people, 'user'=>$user ]);
+        return view('user.edit', ['people' => $people, 'user' => $user]);
     }
 
     /**
@@ -96,15 +102,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
-        //dd($request->all());
-
-        //load resource
-        $user = $this->user->find($id);
-
         //field validation
-        $options = $request->changePassword ? [] : ['password'=>false];
+        $options = $request->changePassword ? [] : ['password' => false];
         $request->validate($user->rules($options), $user->feedback());
 
         //mount $data to update
@@ -115,7 +116,11 @@ class UserController extends Controller
 
         //do the thing
         $user->update($data);
-        return redirect()->route('user.show', ['user' => $user->id ]);
+
+        //log update
+        GeCoLogger::writeLog($user, 'update');
+
+        return redirect()->route('user.show', ['user' => $user->id]);
     }
 
     /**
@@ -126,9 +131,11 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
-
         $user->delete();
-        return redirect()->route('user.index',['message' => 'Usuário excluido com sucesso!']);
+
+        //log destroy
+        GeCoLogger::writeLog($user, 'destroy');
+
+        return redirect()->route('user.index', ['message' => 'Usuário excluido com sucesso!']);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
+use Faker\Factory as FakerFactory;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -31,6 +32,5 @@ class AppServiceProvider extends ServiceProvider
 
         //Prevenir erros de column size em migrations no heroku
         Schema::defaultStringLength(191);
-
     }
 }

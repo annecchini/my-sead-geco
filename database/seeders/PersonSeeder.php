@@ -20,5 +20,8 @@ class PersonSeeder extends Seeder
         $person->name = 'Fernando Lyrio Annecchini';
         $person->cpf = '088.402.807-07';
         $person->save();
+
+        //Person Factory
+        Person::factory()->count(100)->create();
     }
 }
