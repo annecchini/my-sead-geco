@@ -7,18 +7,22 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use OwenIt\Auditing\Contracts\Auditable;
+use Kyslik\ColumnSortable\Sortable;
 
 
 class User extends Authenticatable implements Auditable
 {
     use HasFactory, Notifiable;
     use \OwenIt\Auditing\Auditable;
+    use Sortable;
 
     protected $auditInclude = [
         'person_id',
         'email',
         'password',
     ];
+
+    public $sortable = ['id', 'email', 'created_at', 'updated_at'];
 
     /**
      * The attributes that are mass assignable.

@@ -25,16 +25,29 @@
                 <div class="card-body">
 
                     <div class="mb-1 pr-1 bg-light d-flex justify-content-end">
-                        <a class="ml-1" href="{{route('person.create' )}}">Novo</a>
-                    </div>
+                        <a class="ml-2" href="#" onclick="showFiltersModal();">Filtrar</a>
+                        <a class="ml-2" href="{{route('person.create' )}}">Novo</a>
+                    </div>                    
 
+                    {{-- Aviso de filtros --}}
+                    @if (app('request')->input('name') || app('request')->input('cpf'))
+                    <div class="mt-3 alert alert-warning">
+                        
+                        <div class="d-flex justify-content-end">
+                            <span class="flex-grow-1">Filtros aplicados!</span>
+                            <a class="ml-2" href="#" onclick="showFiltersModal();">Editar</a>
+                            <a class="ml-2" href="{{route('person.index' )}}">Remover</a>
+                        </div>
+                    </div>
+                    @endif
+                                        
                     @if($people->count() > 0)
                     <div class="table-responsive">
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th>CPF</th>
-                                    <th>Nome</th>
+                                    <th>@sortablelink('cpf', 'CPF')</th>
+                                    <th>@sortablelink('name', 'Nome')</th>
                                     <th></th>
                                     <th></th>
                                     <th></th>
@@ -69,7 +82,7 @@
                     </div>
 
                     <nav>
-                        <ul class="pagination">
+                        <ul class="pagination flex-wrap">
                             <li class="page-item">
                                 <a class="page-link" href="{{ $people->previousPageUrl() }}">Voltar</a>
                             </li>
@@ -129,6 +142,45 @@
     </div>
 </div>
 
+<!-- showFilters Modal -->
+<div class="modal fade" id="filtersModal" tabindex="-1" role="dialog" aria-labelledby="filtersModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form method="GET" id="filterForm" action="{{route('person.index')}}">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="filtersModalLabel">Fitros</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label for="cpfInput">CPF</label>
+                        <input type="text" class="form-control" id="cpfInput" name="cpf" value="{{ app('request')->input('cpf') }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nameInput">Nome</label>
+                        <input type="text" class="form-control"
+                            id="nameInput" name="name" value="{{ app('request')->input('name') }}">
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Aplicar filtros</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
 @endsection
 
 @section('page-js-script')
@@ -136,6 +188,10 @@
     function showDeleteModal(options){
         $('#deleteForm').attr('action', options.action);
         $('#deleteModal').modal('show');
+    }
+
+    function showFiltersModal(){
+        $('#filtersModal').modal('show');
     }
 </script>
 @endsection

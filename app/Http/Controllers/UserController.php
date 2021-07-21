@@ -26,10 +26,20 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
         $users = User::paginate(10);
+
+        $users = User::sortable(['created_at' => 'desc'])
+            ->where('email', 'like', '%' . $request->input('email') . '%')
+            ->wherehas('person', function ($query) use ($request) {
+                $query->where('name', 'like', '%' . $request->input('name') . '%');
+            })
+            ->paginate(10);
+
+        $users->appends($request->all());
+
         return view('user.index', ['users' => $users]);
     }
 

@@ -23,10 +23,15 @@ class PersonController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-        $people = Person::paginate(10);
+        $people = Person::sortable(['created_at' => 'desc'])
+            ->where('cpf', 'like', '%' . $request->input('cpf') . '%')
+            ->where('name', 'like', '%' . $request->input('name') . '%')
+            ->paginate(10);
+
+        $people->appends($request->all());
+
         return view('person.index', ['people' => $people]);
     }
 

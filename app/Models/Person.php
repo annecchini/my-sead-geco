@@ -5,14 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
+use Kyslik\ColumnSortable\Sortable;
 
 class Person extends Model implements Auditable
 {
     use HasFactory;
     use \OwenIt\Auditing\Auditable;
+    use Sortable;
 
     protected $fillable = ['person_id', 'name', 'cpf'];
-    protected $auditInclude = ['person_id', 'name', 'cpf'];
+    protected $auditInclude = ['id', 'person_id', 'name', 'cpf'];
+    public $sortable = ['id', 'name', 'cpf', 'created_at', 'updated_at'];
 
     public function users()
     {
