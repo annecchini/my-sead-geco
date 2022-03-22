@@ -14,7 +14,7 @@ class AlterUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function(Blueprint $table){
+        Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('name');
             $table->unsignedBigInteger('person_id')->after('id');
 
@@ -30,13 +30,16 @@ class AlterUsersTable extends Migration
      */
     public function down()
     {
-            Schema::table('users', function(Blueprint $table){
-                //remove contraint
-                $table->dropForeign('users_person_id_foreign'); //[table]_[column]_foreign;
-                
-                $table->dropColumn('person_id');
-                $table->string('name')->default('Lost on migration up...')->after('id');
-                $table->string('name')->default(null)->change();
-            });     
+        Schema::table('users', function (Blueprint $table) {
+            //remove contraint
+            $table->dropForeign('users_person_id_foreign'); //[table]_[column]_foreign;
+            $table->dropColumn('person_id');
+
+            $table->string('name')->after('id')->default('Lost on migration up...');
+        });
+
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('name')->default(null)->change();
+        });
     }
 }

@@ -27,6 +27,11 @@ class Person extends Model implements Auditable
         return $this->hasMany('App\Models\Document');
     }
 
+    public function bonds()
+    {
+        return $this->hasMany('App\Models\Bond');
+    }
+
     public function rules()
     {
         return [

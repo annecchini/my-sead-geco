@@ -30,6 +30,12 @@ class DocumentController extends Controller
         //
     }
 
+    public function personDocumentindex(Person $person)
+    {
+        //
+        return view('document.personDocumentIndex', ['person' => $person]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

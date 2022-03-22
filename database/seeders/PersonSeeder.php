@@ -22,6 +22,6 @@ class PersonSeeder extends Seeder
         $person->save();
 
         //Person Factory
-        Person::factory()->count(100)->create();
+        Person::factory()->count(50)->create();
     }
 }
