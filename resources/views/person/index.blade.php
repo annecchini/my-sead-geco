@@ -48,9 +48,7 @@
                                 <tr>
                                     <th>@sortablelink('cpf', 'CPF')</th>
                                     <th>@sortablelink('name', 'Nome')</th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
+                                    <th class="text-right">Ações</th>
 
                                 </tr>
                             </thead>
@@ -59,20 +57,12 @@
                                 <tr>
                                     <td>{{ $person->cpf }}</td>
                                     <td>{{ $person->name }}</td>
-                                    <td><a href="{{ route('person.show', ['person' => $person->id]) }}">Ver</a></td>
-                                    <td><a href="{{ route('person.edit', ['person' => $person->id]) }}">Editar</a></td>
-                                    <td>
-                                        {{-- <form id="form_{{$person->id}}" method="post"
-                                        action="{{ route('person.destroy', ['person' => $person->id] )}}">
-                                        @csrf
-                                        @method('DELETE')
-                                        </form>
-                                        <a href="#" onclick="document.getElementById('form_{{$person->id}}').submit()">
-                                            Excluir
-                                        </a> --}}
-                                        <a href="#"
+                                    <td class="text-right">
+                                        <a title="Ver" href="{{ route('person.show', ['person' => $person->id]) }}"><i class="bi bi bi-search"></i></a>
+                                        <a title="Editar" href="{{ route('person.edit', ['person' => $person->id]) }}"><i class="bi bi bi-pencil"></i></a>
+                                        <a title="Excluir" href="#"
                                             onclick="showDeleteModal({action:'{{ route('person.destroy', ['person' => $person->id]) }}'});">
-                                            Excluir
+                                            <i class="bi bi bi-trash"></i>
                                         </a>
                                     </td>
                                 </tr>

@@ -59,7 +59,8 @@ class BondController extends Controller
     public function personBondIndex(Person $person)
     {
         //
-        return view('bond.personBondIndex', ['person' => $person]);
+        $bonds = $person->bonds;
+        return view('bond.personBondIndex', ['person' => $person, 'bonds' => $bonds]);
     }
 
     /**

@@ -27,18 +27,33 @@
                 <div class="collapse show" id="collapsePerson">
                     <div class="card-body">
 
-                        @if(count($person->bonds) > 0)
+                        <div class="mb-1 pr-1 bg-light d-flex justify-content-end">
+                            <a class="ml-1" href="{{route('document.create', ['person_id'=>$person->id] )}}">Novo</a>
+                        </div>
+
+                        @if(count($bonds) > 0)
                             <div class="table-responsive">
                                 <table class="table table-hover">
                                     <thead>
                                         <tr>
-                                            <th>Id</th>
+                                            <th>Status</th>
+                                            <th>Ocupação</th>
+                                            <th>Inicio</th>
+                                            <th>Fim</th>
+                                            <th class="text-right">-</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ( $person->bonds as $bond )
-                                        <tr>
-                                            <td>{{ $bond->id }}</td>
+                                        @foreach ( $bonds as $bond )
+                                        <tr id="{{$bond->id}}">
+                                            <td> @if($bond->status()) <i class="bi bi-circle-fill ml-2" style="color:lime"></i> @else <i class="bi bi-circle-fill ml-2" style="color:lightgray"></i> @endif </td>
+                                            <td title="{{$bond->ocupation->name}}{{ isset($bond->course->name) ? " / ".$bond->course->name : '' }}{{ isset($bond->location->name) ? " / ".$bond->location->name : ''}}">
+                                            {{$bond->ocupation->name}}
+                                            </td>
+                                            <td title="{{ \Carbon\Carbon::parse($bond->begin)->format('d/m/Y H:i:s')}}">{{ \Carbon\Carbon::parse($bond->begin)->format('d/m/Y')}}</td>
+                                            <td title="{{ \Carbon\Carbon::parse($bond->end)->format('d/m/Y H:i:s')}}">{{ \Carbon\Carbon::parse($bond->end)->format('d/m/Y')}}</td>
+                                            <td class="text-right">
+                                            </td>
                                         </tr>
                                         @endforeach
                                     </tbody>

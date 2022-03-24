@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 use Kyslik\ColumnSortable\Sortable;
+use Illuminate\Support\Facades\DB;
+
 
 class Person extends Model implements Auditable
 {
@@ -29,7 +31,13 @@ class Person extends Model implements Auditable
 
     public function bonds()
     {
-        return $this->hasMany('App\Models\Bond');
+        $resultQuery =    $this
+            ->hasMany('App\Models\Bond')
+            ->select('*', DB::raw('(begin <= NOW() AND end >= NOW()) OR (begin <= NOW() AND end IS NULL) as status'))
+            ->orderBy('status', 'DESC')
+            ->orderBy('begin', 'DESC')
+            ->orderBy('end', 'DESC');
+        return  $resultQuery;
     }
 
     public function rules()

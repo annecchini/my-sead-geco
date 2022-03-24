@@ -36,9 +36,7 @@
                                 <tr>
                                     <th>@sortablelink('email', 'E-mail')</th>
                                     <th>@sortablelink('person.name', 'Colaborador')</th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
+                                    <th class="text-right">Ações</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -50,23 +48,17 @@
                                             {{$user->person->name}}
                                         </a>
                                     </td>
-                                    <td><a href="{{ route('user.show', ['user' => $user->id]) }}">Ver</a></td>
-                                    <td><a href="{{ route('user.edit', ['user' => $user->id]) }}">Editar</a></td>
-                                    <td>
-                                        {{-- <form id="form_{{$user->id}}" method="post"
-                                        action="{{ route('user.destroy', ['user' => $user->id] )}}">
-                                        @csrf
-                                        @method('DELETE')
-                                        </form>
-                                        <a href="#" onclick="document.getElementById('form_{{$user->id}}').submit()">
-                                            Excluir
-                                        </a> --}}
-                                        <a href="#"
-                                            onclick="showDeleteModal({action:'{{ route('user.destroy', ['user' => $user->id]) }}'});">
-                                            Excluir
+                                    <td class="text-right">
+                                        <a title="Ver" href="{{ route('user.show', ['user' => $user->id]) }}"><i class="bi bi bi-search"></i></a>
+                                        <a title="Editar" href="{{ route('user.edit', ['user' => $user->id]) }}"><i class="bi bi-pencil"></i></a>
+                                        <a 
+                                            title="Excluir"
+                                            href="#"
+                                            onclick="showDeleteModal({action:'{{ route('user.destroy', ['user' => $user->id]) }}'});"
+                                        >
+                                            <i class="bi bi-trash"></i>
                                         </a>
                                     </td>
-
                                 </tr>
                                 @endforeach
                             </tbody>
