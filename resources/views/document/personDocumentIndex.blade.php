@@ -5,17 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
 
-            <ul class="nav nav-tabs mb-4">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{route('person.show', [ 'person'=>$person->id ])}}" >Dados</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page">Documentos</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link"  href="{{route('bond.personBondIndex', [ 'person'=>$person->id ])}}" >Vínculos</a>
-                </li>
-            </ul>
+            @component('person._components.person-navbar',  ['person'=>$person]))@endcomponent
 
             <div class="card">
 

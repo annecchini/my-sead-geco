@@ -15,8 +15,8 @@ class Person extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
     use Sortable;
 
-    protected $fillable = ['person_id', 'name', 'cpf'];
-    protected $auditInclude = ['id', 'person_id', 'name', 'cpf'];
+    protected $fillable = ['name', 'cpf'];
+    protected $auditInclude = ['id', 'name', 'cpf'];
     public $sortable = ['id', 'name', 'cpf', 'created_at', 'updated_at'];
 
     public function users()

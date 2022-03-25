@@ -5,17 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
 
-        <ul class="nav nav-tabs mb-4">
-            <li class="nav-item">
-                <a class="nav-link" href="{{route('person.show', [ 'person'=>$person->id ])}}" >Dados</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{route('document.personDocumentIndex', [ 'person'=>$person->id ])}}" >Documentos</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link active" aria-current="page">Vínculos</a>
-            </li>
-        </ul>
+        @component('person._components.person-navbar',  ['person'=>$person]))@endcomponent
 
             <div class="card">
 
@@ -28,7 +18,7 @@
                     <div class="card-body">
 
                         <div class="mb-1 pr-1 bg-light d-flex justify-content-end">
-                            <a class="ml-1" href="{{route('document.create', ['person_id'=>$person->id] )}}">Novo</a>
+                            <a class="ml-1" href="{{route('bond.create', ['person_id'=>$person->id, 'from'=>'person'] )}}">Novo</a>
                         </div>
 
                         @if(count($bonds) > 0)

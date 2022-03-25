@@ -1,8 +1,10 @@
 # tarefas atuais
 
--   Implementar a feature de Vinculação?
+-   Criar um componente para as abas de person.
 
 # Possiveis para trás
+
+-   Implementar a feature de Vinculação?
 
 -   Implementar um PersonPicker melhor em UserCreate e UserUpdate.
 -   Criar um componente de paginação para as listas? (Evitar CTRL+C CTRL+V).

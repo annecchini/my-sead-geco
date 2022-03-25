@@ -24,8 +24,11 @@ Auth::routes([
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::resource('person', 'PersonController');
-Route::resource('user', 'UserController');
-Route::resource('document', 'DocumentController');
-
 Route::get('/person/{person}/bonds', [App\Http\Controllers\BondController::class, 'personBondIndex'])->name('bond.personBondIndex');
 Route::get('/person/{person}/documents', [App\Http\Controllers\DocumentController::class, 'personDocumentIndex'])->name('document.personDocumentIndex');
+
+Route::resource('user', 'UserController');
+
+Route::resource('document', 'DocumentController');
+
+Route::resource('bond', 'BondController');
