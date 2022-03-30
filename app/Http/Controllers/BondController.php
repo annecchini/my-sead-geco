@@ -33,6 +33,9 @@ class BondController extends Controller
     public function index()
     {
         //
+        $bonds = Bond::sortable(['created_at' => 'desc'])->paginate(10);
+
+        return view('bond.index', ['bonds' => $bonds]);
     }
 
     /**
@@ -92,7 +95,7 @@ class BondController extends Controller
         //log create
         GeCoLogger::writeLog($bond, 'create');
 
-        if ($request->input('from') == "person") return redirect()->route('bond.personBondIndex', ['person' => $request->input('person_id')]);
+        if ($request->input('to') == "person") return redirect()->route('bond.personBondIndex', ['person' => $request->input('person_id')]);
         else return redirect()->route('bond.show', ['bond' => $bond->id]);
     }
 
@@ -129,6 +132,18 @@ class BondController extends Controller
     public function edit(Bond $bond)
     {
         //
+        $people = Person::orderBy('name')->get();
+        $ocupations = Ocupation::orderBy('name')->get();
+        $courses =  Course::orderBy('name')->get();
+        $locations =  Pole::orderBy('name')->get();
+
+        return view('bond.edit', [
+            'bond' => $bond,
+            'people' => $people,
+            'ocupations' => $ocupations,
+            'courses' => $courses,
+            'locations' => $locations
+        ]);
     }
 
     /**
@@ -141,6 +156,36 @@ class BondController extends Controller
     public function update(Request $request, Bond $bond)
     {
         //
+        //Phase 1 validation
+        $validator = Validator::make($request->all(), $this->bond->rules(), $this->bond->feedback());
+        if ($validator->fails()) return redirect()->back()->withErrors($validator)->withInput();
+
+        //Phase 2 validation
+        if ($request->input('begin-date') == $request->input('end-date')) {
+            $rules =  ['end-time' => 'date_format:H:i:s|after_or_equal:begin-time'];
+            $validator = Validator::make($request->all(), $rules, $this->bond->feedback());
+            if ($validator->fails()) return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        //prepare model
+        $bond_data = [
+            "person_id" => $request->input('person_id'),
+            "ocupation_id" => $request->input('ocupation_id'),
+            "begin" => $request->input('begin-date') . " " . $request->input('begin-time'),
+            "end" => $request->input('end-date') ? $request->input('end-date') . " " . $request->input('end-time') : null,
+            "course_id" => $request->input('course_id'),
+            "pole_id" => $request->input('pole_id')
+        ];
+
+        //update
+        $bond->update($bond_data);
+
+        //log update
+        GeCoLogger::writeLog($bond, 'update');
+
+        //redirect to right place
+        if ($request->input('to') == "person") return redirect()->route('bond.personBondIndex', ['person' => $bond->person_id]);
+        return redirect()->route('bond.show', ['bond' => $bond->id]);
     }
 
     /**

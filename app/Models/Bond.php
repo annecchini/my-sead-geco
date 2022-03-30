@@ -6,12 +6,18 @@ use DateTime;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use OwenIt\Auditing\Contracts\Auditable;
+use Kyslik\ColumnSortable\Sortable;
 
-class Bond extends Model
+class Bond extends Model implements Auditable
 {
     use HasFactory;
+    use \OwenIt\Auditing\Auditable;
+    use Sortable;
 
     protected $fillable = ['person_id', 'ocupation_id', 'begin', 'end', 'course_id', 'pole_id'];
+    protected $auditInclude = ['id', 'person_id', 'ocupation_id', 'begin', 'end', 'course_id', 'pole_id'];
+    public $sortable = ['id', 'created_at', 'updated_at'];
 
     public function status()
     {
@@ -29,6 +35,10 @@ class Bond extends Model
         return 0;
     }
 
+    public function person()
+    {
+        return $this->belongsTo('App\Models\Person', 'person_id');
+    }
 
     public function ocupation()
     {
@@ -53,8 +63,8 @@ class Bond extends Model
             'ocupation_id' => 'required|exists:ocupations,id',
             'begin-date' => 'required|date_format:Y-m-d',
             'begin-time' => 'required|date_format:H:i:s',
-            'end-date' => 'nullable|date_format:Y-m-d|after_or_equal:begin-date',
-            'end-time' => 'required_with:end-date|date_format:H:i:s',
+            'end-date' => 'required|date_format:Y-m-d|after_or_equal:begin-date',
+            'end-time' => 'required|date_format:H:i:s',
             'course_id' => 'nullable|exists:courses,id',
             'pole_id' => 'nullable|exists:poles,id'
         ];

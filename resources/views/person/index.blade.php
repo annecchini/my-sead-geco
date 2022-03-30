@@ -6,14 +6,14 @@
         <div class="col-md-12">
 
             @if ($errors->any())
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                @foreach ($errors->all() as $error)
-                {{ $error }}
-                @endforeach
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    @foreach ($errors->all() as $error)
+                    {{ $error }}
+                    @endforeach
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
             @endif
 
             <div class="card">
@@ -81,11 +81,11 @@
                                 <li class="page-item {{ $people->currentPage() == $i ? 'active' : '' }}">
                                     <a class="page-link" href="{{$people->url($i)}}">{{$i}}</a>
                                 </li>
-                                @endfor
+                            @endfor
 
-                                <li class="page-item">
-                                    <a class="page-link" href="{{ $people->nextPageUrl() }}">Avançar</a>
-                                </li>
+                            <li class="page-item">
+                                <a class="page-link" href="{{ $people->nextPageUrl() }}">Avançar</a>
+                            </li>
                         </ul>
                     </nav>
 

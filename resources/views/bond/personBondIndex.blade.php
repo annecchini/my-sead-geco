@@ -30,7 +30,7 @@
                                             <th>Ocupação</th>
                                             <th>Inicio</th>
                                             <th>Fim</th>
-                                            <th class="text-right">-</th>
+                                            <th class="text-right">Ações</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -38,11 +38,12 @@
                                         <tr id="{{$bond->id}}">
                                             <td> @if($bond->status()) <i class="bi bi-circle-fill ml-2" style="color:lime"></i> @else <i class="bi bi-circle-fill ml-2" style="color:lightgray"></i> @endif </td>
                                             <td title="{{$bond->ocupation->name}}{{ isset($bond->course->name) ? " / ".$bond->course->name : '' }}{{ isset($bond->location->name) ? " / ".$bond->location->name : ''}}">
-                                            {{$bond->ocupation->name}}
+                                                {{$bond->ocupation->name}}
                                             </td>
                                             <td title="{{ \Carbon\Carbon::parse($bond->begin)->format('d/m/Y H:i:s')}}">{{ \Carbon\Carbon::parse($bond->begin)->format('d/m/Y')}}</td>
                                             <td title="{{ \Carbon\Carbon::parse($bond->end)->format('d/m/Y H:i:s')}}">{{ \Carbon\Carbon::parse($bond->end)->format('d/m/Y')}}</td>
                                             <td class="text-right">
+                                                <a title="Editar" href="{{ route('bond.edit', ['bond' => $bond->id, 'from'=>'person']) }}"><i class="bi bi bi-pencil"></i></a>
                                             </td>
                                         </tr>
                                         @endforeach

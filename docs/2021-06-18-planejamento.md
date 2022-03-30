@@ -1,14 +1,17 @@
 # tarefas atuais
 
--   Criar um componente para as abas de person.
+-   Implementar a feature de Vinculação?
+-   -   show
+-   -   listar (falta sort e filtros)
+-   -   excluir
 
 # Possiveis para trás
 
--   Implementar a feature de Vinculação?
-
+-   unificar campos date e time em um unico campo.
 -   Implementar um PersonPicker melhor em UserCreate e UserUpdate.
 -   Criar um componente de paginação para as listas? (Evitar CTRL+C CTRL+V).
 -   Melhorar a UX dos filtros de (User, Person)
+-   Criar um componente para alerts
 
 # Possiveis passos para frente
 

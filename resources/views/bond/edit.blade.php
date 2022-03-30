@@ -12,9 +12,11 @@
 
                 <div class="card-body">
 
-                    <form method="POST" action="{{ route('bond.store', ['to'=>Request::input('from')]) }}">
+                    <form method="POST" action="{{ route('bond.update', ['bond'=>$bond, 'to'=>Request::input('from')]) }}">
 
                         @csrf
+
+                        @method('PUT')
 
                         <div class="form-group">
                             <label for="personInput">Colaborador *</label>
@@ -24,13 +26,8 @@
                                 <option value="">-- Selecione um colaborador --</option>
                                 @foreach ( $people as $person )
                                 <option value="{{ $person->id }}"
-                                    {{ 
-                                        old('person_id') == $person->id 
-                                        ? 'selected' 
-                                        : (app('request')->input('person_id') && (app('request')->input('person_id') == $person->id)
-                                            ?  'selected'
-                                            : '') 
-                                    }}>
+                                    {{ old('person_id') == $person->id ? 'selected' : ($bond->person_id == $person->id ? 'selected' : '')}}
+                                >
                                     {{$person->name}} ({{$person->cpf}})
                                 </option>
                                 @endforeach
@@ -48,7 +45,8 @@
                                 <option value="">-- Selecione uma ocupação --</option>
                                 @foreach ( $ocupations as $ocupation )
                                 <option value="{{ $ocupation->id }}"
-                                    {{ old('ocupation_id') == $ocupation->id ? 'selected' : '' }}>
+                                    {{ old('ocupation_id') == $ocupation->id ? 'selected' : ($bond->ocupation_id == $ocupation->id ? 'selected' : '')}}
+                                >
                                     {{$ocupation->name}}
                                 </option>
                                 @endforeach
@@ -61,7 +59,8 @@
                         <div class="form-row">
                             <div class="form-group col-6">
                                 <label for="beginDateInput">Inicio *</label>
-                                <input class="form-control {{ $errors->has('begin-date') ? 'is-invalid' : ''}}" id="beginDateInput" type="date" value="{{ old('begin-date')}}" name="begin-date">
+                                <input class="form-control {{ $errors->has('begin-date') ? 'is-invalid' : ''}}" id="beginDateInput" type="date" 
+                                    value="{{ old('begin-date') ? old('begin-date') : \Carbon\Carbon::parse($bond->begin)->format('Y-m-d') }}" name="begin-date">
                                 @if( $errors->has('begin-date') )
                                     <div class="invalid-feedback">{{ $errors->first('begin-date') }}</div>
                                 @endif
@@ -69,7 +68,8 @@
 
                             <div class="form-group col-6">
                                 <label for="beginTimeInput">*</label>
-                                <input class="form-control {{ $errors->has('begin-time') ? 'is-invalid' : ''}}" id="beginTimeInput" type="time" step="1" value={{ old('begin-time', '00:00:00') }} name="begin-time">
+                                <input class="form-control {{ $errors->has('begin-time') ? 'is-invalid' : ''}}" id="beginTimeInput" type="time" step="1" 
+                                    value={{ old('begin-time') ? old('begin-time') : \Carbon\Carbon::parse($bond->begin)->format('H:i:s') }} name="begin-time">
                                 @if( $errors->has('begin-time') )
                                     <div class="invalid-feedback">{{ $errors->first('begin-time') }}</div>
                                 @endif
@@ -79,7 +79,8 @@
                         <div class="form-row">
                             <div class="form-group col-6">
                                 <label for="endDateInput">Fim</label>
-                                <input class="form-control {{ $errors->has('end-date') ? 'is-invalid' : ''}}" id="endDateInput" type="date" value="{{ old('end-date')}}" name="end-date">
+                                <input class="form-control {{ $errors->has('end-date') ? 'is-invalid' : ''}}" id="endDateInput" type="date" 
+                                    value="{{ old('end-date') ? old('end-date') : \Carbon\Carbon::parse($bond->end)->format('Y-m-d') }}" name="end-date">
                                 @if( $errors->has('end-date') )
                                     <div class="invalid-feedback">{{ $errors->first('end-date') }}</div>
                                 @endif
@@ -87,7 +88,9 @@
 
                             <div class="form-group col-6">
                                 <label for="endTimeInput">.</label>
-                                <input class="form-control {{ $errors->has('end-time') ? 'is-invalid' : ''}}" id="endTimeInput" type="time" step="1" value={{ old('end-time', '23:59:59') }} name="end-time">
+                                <input class="form-control {{ $errors->has('end-time') ? 'is-invalid' : ''}}" id="endTimeInput" type="time" step="1" 
+                                    value={{ old('end-time') ? old('end-time') : \Carbon\Carbon::parse($bond->end)->format('H:i:s') }} name="end-time">
+
                                 @if( $errors->has('end-time') )
                                     <div class="invalid-feedback">{{ $errors->first('end-time') }}</div>
                                 @endif
@@ -102,7 +105,7 @@
                                 <option value="">-- Selecione um curso --</option>
                                 @foreach ( $courses as $course )
                                 <option value="{{ $course->id }}"
-                                    {{ old('course_id') == $course->id ? 'selected' : '' }}>
+                                    {{ old('course_id') == $course->id ? 'selected' : ($bond->course_id == $course->id ? 'selected' : '') }}>
                                     {{$course->name}}
                                 </option>
                                 @endforeach
@@ -120,7 +123,7 @@
                                 <option value="">-- Selecione um local --</option>
                                 @foreach ( $locations as $pole )
                                 <option value="{{ $pole->id }}"
-                                    {{ old('pole_id') == $pole->id ? 'selected' : '' }}>
+                                    {{ old('pole_id') == $pole->id ? 'selected' : ($bond->pole_id == $pole->id ? 'selected' : '') }}>
                                     {{$pole->name}}
                                 </option>
                                 @endforeach
