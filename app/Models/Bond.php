@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
-use DateTime;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use OwenIt\Auditing\Contracts\Auditable;
 use Kyslik\ColumnSortable\Sortable;
+use Illuminate\Support\Facades\DB;
+
 
 class Bond extends Model implements Auditable
 {
@@ -17,7 +18,16 @@ class Bond extends Model implements Auditable
 
     protected $fillable = ['person_id', 'ocupation_id', 'begin', 'end', 'course_id', 'pole_id'];
     protected $auditInclude = ['id', 'person_id', 'ocupation_id', 'begin', 'end', 'course_id', 'pole_id'];
-    public $sortable = ['id', 'created_at', 'updated_at'];
+    public $sortable = ['id', 'status', 'begin', 'end', 'created_at', 'updated_at'];
+
+    //metodo de ordenação para (bond_status) no sortable
+    public function statusSortable($query, $direction)
+    {
+        $query = $query
+            ->select('*', DB::raw('(begin <= NOW() AND end >= NOW()) OR (begin <= NOW() AND end IS NULL) as bond_status'))
+            ->orderBy('bond_status', $direction);
+        return $query;
+    }
 
     public function status()
     {

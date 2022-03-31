@@ -45,11 +45,11 @@
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
-                                        <th>Status</th>
-                                        <th>Colaborador</th>
-                                        <th>Ocupação</th>
-                                        <th>Início</th>
-                                        <th>Fim</th>
+                                        <th>@sortablelink('status', 'Status')</th>
+                                        <th>@sortablelink('person.name', 'Colaborador')</th>
+                                        <th>@sortablelink('ocupation.name', 'Ocupação')</th>
+                                        <th>@sortablelink('begin', 'Início')</th>
+                                        <th>@sortablelink('end', 'Fim')</th>
                                         <th class="text-right">Ações</th>
                                     </tr>
                                 </thead>

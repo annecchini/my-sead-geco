@@ -1,7 +1,7 @@
 # tarefas atuais
 
 -   Implementar a feature de Vinculação
--   -   listar (falta sort e filtros)
+-   -   listar (filtros)
 
 # Possiveis para trás
 

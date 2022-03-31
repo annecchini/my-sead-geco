@@ -30,10 +30,12 @@ class BondController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-        $bonds = Bond::sortable(['created_at' => 'desc'])->paginate(10);
+        $bonds = $this->bond->sortable(['created_at' => 'desc'])->paginate(10);
+
+        //append sort/filter options on pagination
+        $bonds->appends($request->all());
 
         return view('bond.index', ['bonds' => $bonds]);
     }
