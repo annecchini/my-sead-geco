@@ -43,7 +43,11 @@
                                             <td title="{{ \Carbon\Carbon::parse($bond->begin)->format('d/m/Y H:i:s')}}">{{ \Carbon\Carbon::parse($bond->begin)->format('d/m/Y')}}</td>
                                             <td title="{{ \Carbon\Carbon::parse($bond->end)->format('d/m/Y H:i:s')}}">{{ \Carbon\Carbon::parse($bond->end)->format('d/m/Y')}}</td>
                                             <td class="text-right">
+                                                <a title="Ver" href="{{ route('bond.show', ['bond' => $bond->id]) }}"><i class="bi bi bi-search"></i></a>
                                                 <a title="Editar" href="{{ route('bond.edit', ['bond' => $bond->id, 'from'=>'person']) }}"><i class="bi bi bi-pencil"></i></a>
+                                                <a title="Excluir" href="#"
+                                                onclick="showDeleteModal({action:'{{ route('bond.destroy', ['bond' => $bond->id, 'to' => 'person']) }}'});">
+                                                <i class="bi bi bi-trash"></i>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -60,5 +64,7 @@
         </div>
     </div>
 </div>
+
+@component('bond._components.deleteBondModal'))@endcomponent
 
 @endsection

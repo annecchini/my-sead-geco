@@ -1,9 +1,7 @@
 # tarefas atuais
 
--   Implementar a feature de Vinculação?
--   -   show
+-   Implementar a feature de Vinculação
 -   -   listar (falta sort e filtros)
--   -   excluir
 
 # Possiveis para trás
 
@@ -12,6 +10,9 @@
 -   Criar um componente de paginação para as listas? (Evitar CTRL+C CTRL+V).
 -   Melhorar a UX dos filtros de (User, Person)
 -   Criar um componente para alerts
+-   mensagens de delete.
+-   mensagens de create.
+-   mensagens de update.
 
 # Possiveis passos para frente
 

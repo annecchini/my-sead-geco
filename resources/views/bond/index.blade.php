@@ -45,7 +45,6 @@
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
-                                        <th>id</th>
                                         <th>Status</th>
                                         <th>Colaborador</th>
                                         <th>Ocupação</th>
@@ -57,7 +56,6 @@
                                 <tbody>
                                     @foreach ( $bonds as $bond )
                                         <tr>
-                                            <td>{{ $bond->id }}</td>
                                             <td> @if($bond->status()) <i class="bi bi-circle-fill ml-2" style="color:lime"></i> @else <i class="bi bi-circle-fill ml-2" style="color:lightgray"></i> @endif </td>
                                             <td>
                                                 <a href="{{ route('person.show', ['person'=>$bond->person->id]) }}">
@@ -70,7 +68,12 @@
                                             <td title="{{ \Carbon\Carbon::parse($bond->begin)->format('d/m/Y H:i:s')}}">{{ \Carbon\Carbon::parse($bond->begin)->format('d/m/Y')}}</td>
                                             <td title="{{ \Carbon\Carbon::parse($bond->end)->format('d/m/Y H:i:s')}}">{{ \Carbon\Carbon::parse($bond->end)->format('d/m/Y')}}</td>
                                             <td class="text-right">
+                                                <a title="Ver" href="{{ route('bond.show', ['bond' => $bond->id]) }}"><i class="bi bi bi-search"></i></a>
                                                 <a title="Editar" href="{{ route('bond.edit', ['bond' => $bond->id]) }}"><i class="bi bi bi-pencil"></i></a>
+                                                <a title="Excluir" href="#"
+                                                onclick="showDeleteModal({action:'{{ route('bond.destroy', ['bond' => $bond->id]) }}'});">
+                                                <i class="bi bi bi-trash"></i>
+                                            </a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -107,6 +110,8 @@
         </div>
     </div>
 </div>
+
+@component('bond._components.deleteBondModal'))@endcomponent
 
 @endsection
 

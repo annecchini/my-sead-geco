@@ -69,7 +69,7 @@
 
                             <div class="form-group col-6">
                                 <label for="beginTimeInput">*</label>
-                                <input class="form-control {{ $errors->has('begin-time') ? 'is-invalid' : ''}}" id="beginTimeInput" type="time" step="1" value={{ old('begin-time', '00:00:00') }} name="begin-time">
+                                <input class="form-control {{ $errors->has('begin-time') ? 'is-invalid' : ''}}" id="beginTimeInput" type="time" step="1" value="{{ old('begin-time', '00:00:00') }}" name="begin-time">
                                 @if( $errors->has('begin-time') )
                                     <div class="invalid-feedback">{{ $errors->first('begin-time') }}</div>
                                 @endif

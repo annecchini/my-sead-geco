@@ -108,6 +108,7 @@ class BondController extends Controller
     public function show(Bond $bond)
     {
         //
+        return view('bond.show', ['bond' => $bond]);
     }
 
     /**
@@ -194,8 +195,21 @@ class BondController extends Controller
      * @param  \App\Models\Bond  $bond
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Bond $bond)
+    public function destroy(Request $request, Bond $bond)
     {
-        //
+        //cant delete if...
+
+        //preserve $bond data for future operations
+        $b = $bond->replicate();
+        $b->id = $bond->id;
+
+        //delete
+        $bond->delete();
+
+        //log delete
+        GeCoLogger::writeLog($b, 'destroy');
+
+        if ($request->input('to') == "person") return redirect()->route('bond.personBondIndex', ['person' => $b->person_id]);
+        return redirect()->route('bond.index');
     }
 }
