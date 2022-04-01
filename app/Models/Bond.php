@@ -8,6 +8,8 @@ use Carbon\Carbon;
 use OwenIt\Auditing\Contracts\Auditable;
 use Kyslik\ColumnSortable\Sortable;
 use Illuminate\Support\Facades\DB;
+use eloquentFilter\QueryFilter\ModelFilters\Filterable;
+use App\ModelFilters\BondFilters;
 
 
 class Bond extends Model implements Auditable
@@ -15,10 +17,32 @@ class Bond extends Model implements Auditable
     use HasFactory;
     use \OwenIt\Auditing\Auditable;
     use Sortable;
+    use Filterable, BondFilters;
 
     protected $fillable = ['person_id', 'ocupation_id', 'begin', 'end', 'course_id', 'pole_id'];
     protected $auditInclude = ['id', 'person_id', 'ocupation_id', 'begin', 'end', 'course_id', 'pole_id'];
     public $sortable = ['id', 'status', 'begin', 'end', 'created_at', 'updated_at'];
+    public static $accepted_filters = [
+        'status_is',
+        'person_like',
+        'ocupation_like',
+        'begin_gte',
+        'begin_lte',
+        'end_gte',
+        'end_lte',
+        'course_like',
+        'pole_like'
+    ];
+    private static $whiteListFilter = ['*'];
+
+    public function scopeAddStatusColumn($query)
+    {
+        $previous_columns = $query->getQuery()->columns;
+        $status_column = DB::raw('(begin <= NOW() AND end >= NOW()) OR (begin <= NOW() AND end IS NULL) as status');
+        $new_columns = $previous_columns == null ? ['*', $status_column] : [$previous_columns] + [$status_column];
+        $query = $query->select($new_columns);
+        return $query;
+    }
 
     //metodo de ordenação para (bond_status) no sortable
     public function statusSortable($query, $direction)

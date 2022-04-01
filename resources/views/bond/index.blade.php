@@ -30,12 +30,21 @@
                     </div>
 
                     {{-- Aviso de filtros --}}
-                    @if (app('request')->input('name') || app('request')->input('cpf'))
-                    <div class="mt-3 alert alert-warning">
+                    @if (app('request')->input('status_is') 
+                    || app('request')->input('person_like') 
+                    || app('request')->input('ocupation_like') 
+                    || app('request')->input('begin_gte')
+                    || app('request')->input('begin_lte')
+                    || app('request')->input('end_gte')
+                    || app('request')->input('end_lte')
+                    || app('request')->input('course_like')
+                    || app('request')->input('pole_like')
+                    )
+                    <div class="mt-3 alert alert-warning py-0">
                         <div class="d-flex justify-content-end">
                             <span class="flex-grow-1">Filtros aplicados!</span>
                             <a class="ml-2" href="#" onclick="showFiltersModal();">Editar</a>
-                            <a class="ml-2" href="{{route('person.index' )}}">Remover</a>
+                            <a class="ml-2" href="{{route('bond.index' )}}">Remover</a>
                         </div>
                     </div>
                     @endif
@@ -112,6 +121,7 @@
 </div>
 
 @component('bond._components.deleteBondModal'))@endcomponent
+@component('bond._components.showFiltersModal'))@endcomponent
 
 @endsection
 
