@@ -29,25 +29,11 @@
                         <a class="ml-2" href="{{route('bond.create' )}}">Novo</a>
                     </div>
 
-                    {{-- Aviso de filtros --}}
-                    @if (app('request')->input('status_is') 
-                    || app('request')->input('person_like') 
-                    || app('request')->input('ocupation_like') 
-                    || app('request')->input('begin_gte')
-                    || app('request')->input('begin_lte')
-                    || app('request')->input('end_gte')
-                    || app('request')->input('end_lte')
-                    || app('request')->input('course_like')
-                    || app('request')->input('pole_like')
-                    )
-                    <div class="mt-3 alert alert-warning py-0">
-                        <div class="d-flex justify-content-end">
-                            <span class="flex-grow-1">Filtros aplicados!</span>
-                            <a class="ml-2" href="#" onclick="showFiltersModal();">Editar</a>
-                            <a class="ml-2" href="{{route('bond.index' )}}">Remover</a>
-                        </div>
-                    </div>
-                    @endif
+                    @component('_components.filters-alert', [
+                        'filter_list' => App\Models\Bond::$accepted_filters,
+                        'edit_function' =>"showFiltersModal();",
+                        'reset_route' => route('bond.index' ),
+                    ])@endcomponent
 
                     @if($bonds->count() > 0)
                         <div class="table-responsive">
@@ -90,23 +76,8 @@
                             </table>
                         </div>
 
-                        <nav>
-                            <ul class="pagination flex-wrap">
-                                <li class="page-item">
-                                    <a class="page-link" href="{{ $bonds->previousPageUrl() }}">Voltar</a>
-                                </li>
-    
-                                @for( $i = 1; $i <= $bonds->lastPage(); $i++)
-                                    <li class="page-item {{ $bonds->currentPage() == $i ? 'active' : '' }}">
-                                        <a class="page-link" href="{{$bonds->url($i)}}">{{$i}}</a>
-                                    </li>
-                                    @endfor
-    
-                                    <li class="page-item">
-                                        <a class="page-link" href="{{ $bonds->nextPageUrl() }}">Avançar</a>
-                                    </li>
-                            </ul>
-                        </nav>
+                        @component('_components.pagination-nav', ['list'=>$bonds]))@endcomponent
+
                     @else
                         <p>Sem vínculos para exibir.</p>
                     @endif

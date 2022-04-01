@@ -27,19 +27,13 @@
                     <div class="mb-1 pr-1 bg-light d-flex justify-content-end">
                         <a class="ml-2" href="#" onclick="showFiltersModal();">Filtrar</a>
                         <a class="ml-2" href="{{route('person.create' )}}">Novo</a>
-                    </div>                    
-
-                    {{-- Aviso de filtros --}}
-                    @if (app('request')->input('name') || app('request')->input('cpf'))
-                    <div class="mt-3 alert alert-warning">
-                        
-                        <div class="d-flex justify-content-end">
-                            <span class="flex-grow-1">Filtros aplicados!</span>
-                            <a class="ml-2" href="#" onclick="showFiltersModal();">Editar</a>
-                            <a class="ml-2" href="{{route('person.index' )}}">Remover</a>
-                        </div>
                     </div>
-                    @endif
+                    
+                    @component('_components.filters-alert', [
+                        'filter_list' => ['name', 'cpf'],
+                        'edit_function' =>"showFiltersModal();",
+                        'reset_route' => route('person.index' ),
+                    ])@endcomponent
                                         
                     @if($people->count() > 0)
                     <div class="table-responsive">
@@ -71,23 +65,7 @@
                         </table>
                     </div>
 
-                    <nav>
-                        <ul class="pagination flex-wrap">
-                            <li class="page-item">
-                                <a class="page-link" href="{{ $people->previousPageUrl() }}">Voltar</a>
-                            </li>
-
-                            @for( $i = 1; $i <= $people->lastPage(); $i++)
-                                <li class="page-item {{ $people->currentPage() == $i ? 'active' : '' }}">
-                                    <a class="page-link" href="{{$people->url($i)}}">{{$i}}</a>
-                                </li>
-                            @endfor
-
-                            <li class="page-item">
-                                <a class="page-link" href="{{ $people->nextPageUrl() }}">Avançar</a>
-                            </li>
-                        </ul>
-                    </nav>
+                    @component('_components.pagination-nav', ['list'=>$people]))@endcomponent
 
                     @else
                     <p>Sem colaboradores para exibir</p>

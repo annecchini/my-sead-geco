@@ -15,11 +15,11 @@
                 <div class="modal-body">
                     
                     <div class="form-group">
-                        <label for="personInput">Status</label>
-                        <select id="statusImput" class="form-control" name="status_is" value="{{ app('request')->input('status_is')}}">
+                        <label for="statusInput">Status</label>
+                        <select id="statusImput" class="form-control" name="status_is" value="">
                             <option value="">-- Selecione um status --</option>
-                            <option value="1" >Ativo</option>
-                            <option value="0" >Inativo</option>
+                            <option value="1" {{ app('request')->input('status_is') == "1" ? 'selected' : ''}} >Ativo</option>
+                            <option value="0" {{ app('request')->input('status_is') == "0" ? 'selected' : ''}} >Inativo</option>
                         </select>
                     </div>
 

@@ -17,17 +17,11 @@
                         <a class="ml-2" href="{{route('user.create' )}}">Novo</a>
                     </div>
 
-                    {{-- Aviso de filtros --}}
-                    @if (app('request')->input('email') || app('request')->input('name'))
-                    <div class="mt-3 alert alert-warning">
-                        
-                        <div class="d-flex justify-content-end">
-                            <span class="flex-grow-1">Filtros aplicados!</span>
-                            <a class="ml-2" href="#" onclick="showFiltersModal();">Editar</a>
-                            <a class="ml-2" href="{{route('user.index' )}}">Remover</a>
-                        </div>
-                    </div>
-                    @endif
+                    @component('_components.filters-alert', [
+                        'filter_list' => ['email', 'name'],
+                        'edit_function' =>"showFiltersModal();",
+                        'reset_route' => route('user.index' ),
+                    ])@endcomponent
 
                     @if($users->count() > 0)
                     <div class="table-responsive">
@@ -65,32 +59,11 @@
                         </table>
                     </div>
 
-                    <nav>
-                        <ul class="pagination">
-                            <li class="page-item">
-                                <a class="page-link" href="{{ $users->previousPageUrl() }}">Voltar</a>
-                            </li>
-
-                            @for( $i = 1; $i <= $users->lastPage(); $i++)
-                                <li class="page-item {{ $users->currentPage() == $i ? 'active' : '' }}">
-                                    <a class="page-link" href="{{$users->url($i)}}">{{$i}}</a>
-                                </li>
-                                @endfor
-
-                                <li class="page-item">
-                                    <a class="page-link" href="{{ $users->nextPageUrl() }}">Avançar</a>
-                                </li>
-                        </ul>
-                    </nav>
+                    @component( '_components.pagination-nav', ['list'=>$users] )@endcomponent
 
                     @else
-                    <p>Sem usuários para exibir</p>
+                    <p>Sem usuários para exibir.</p>
                     @endif
-
-
-
-
-
 
                 </div>
 
