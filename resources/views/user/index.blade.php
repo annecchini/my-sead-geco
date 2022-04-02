@@ -4,6 +4,10 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
+
+            @component('_components.alerts-error')@endcomponent
+            @component('_components.alert-success')@endcomponent
+
             <div class="card">
 
                 <div class="card-header">
@@ -17,7 +21,7 @@
                         <a class="ml-2" href="{{route('user.create' )}}">Novo</a>
                     </div>
 
-                    @component('_components.filters-alert', [
+                    @component('_components.alert-filters-applied', [
                         'filter_list' => ['email', 'name'],
                         'edit_function' =>"showFiltersModal();",
                         'reset_route' => route('user.index' ),

@@ -25,7 +25,7 @@ class PersonController extends Controller
      */
     public function index(Request $request)
     {
-        $people = Person::sortable(['created_at' => 'desc'])
+        $people = Person::sortable(['updated_at' => 'desc'])
             ->where('cpf', 'like', '%' . $request->input('cpf') . '%')
             ->where('name', 'like', '%' . $request->input('name') . '%')
             ->paginate(10);
@@ -63,7 +63,8 @@ class PersonController extends Controller
         //log create
         GeCoLogger::writeLog($person, 'create');
 
-        return redirect()->route('person.show', ['person' => $person->id]);
+        $success_message = 'Colaborador criado com sucesso.';
+        return redirect()->route('person.index', ['person' => $person->id])->with('success_message', $success_message);
     }
 
     /**

@@ -6,6 +6,8 @@
         <div class="col-md-12">
 
         @component('person._components.person-navbar',  ['person'=>$person]))@endcomponent
+        
+        @component('_components.alert-success')@endcomponent
 
             <div class="card">
 

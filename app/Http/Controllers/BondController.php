@@ -34,7 +34,7 @@ class BondController extends Controller
     {
         $bonds_query = new Bond();
         $bonds_query = $bonds_query->AcceptRequest(Bond::$accepted_filters)->filter();
-        $bonds_query = $bonds_query->sortable(['created_at' => 'desc']);
+        $bonds_query = $bonds_query->sortable(['updated_at' => 'desc']);
 
         $bonds = $bonds_query->paginate(10);
         $bonds->withQueryString();
@@ -99,8 +99,9 @@ class BondController extends Controller
         //log create
         GeCoLogger::writeLog($bond, 'create');
 
-        if ($request->input('to') == "person") return redirect()->route('bond.personBondIndex', ['person' => $request->input('person_id')]);
-        else return redirect()->route('bond.show', ['bond' => $bond->id]);
+        $success_message = 'Vínculo criado com sucesso.';
+        if ($request->input('to') == "person") return redirect()->route('bond.personBondIndex', ['person' => $request->input('person_id')])->with('success_message', $success_message);
+        return redirect()->route('bond.index', ['bond' => $bond->id])->with('success_message', $success_message);
     }
 
     /**

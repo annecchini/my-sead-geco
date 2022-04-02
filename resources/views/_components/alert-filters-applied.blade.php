@@ -2,8 +2,10 @@
     @php
         $have_filters_to_alert = false;
         foreach ($filter_list as $key => $filter) {
-            if(app('request')->input($filter)) $have_filters_to_alert = true;
-            break;
+            if(app('request')->input($filter)) {
+                $have_filters_to_alert = true;
+                break;
+            }
         }
     @endphp
     

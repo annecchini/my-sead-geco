@@ -31,7 +31,7 @@ class UserController extends Controller
         //
         $users = User::paginate(10);
 
-        $users = User::sortable(['created_at' => 'desc'])
+        $users = User::sortable(['updated_at' => 'desc'])
             ->where('email', 'like', '%' . $request->input('email') . '%')
             ->wherehas('person', function ($query) use ($request) {
                 $query->where('name', 'like', '%' . $request->input('name') . '%');
@@ -77,7 +77,8 @@ class UserController extends Controller
         //log create
         GeCoLogger::writeLog($user, 'create');
 
-        return redirect()->route('user.show', ['user' => $user->id]);
+        $success_message = 'Usuário criado com sucesso.';
+        return redirect()->route('user.index', ['user' => $user->id])->with('success_message', $success_message);
     }
 
     /**

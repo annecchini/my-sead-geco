@@ -5,16 +5,8 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
 
-            @if ($errors->any())
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    @foreach ($errors->all() as $error)
-                    {{ $error }}
-                    @endforeach
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            @endif
+            @component('_components.alerts-error')@endcomponent
+            @component('_components.alert-success')@endcomponent
 
             <div class="card">
 
@@ -29,7 +21,7 @@
                         <a class="ml-2" href="{{route('bond.create' )}}">Novo</a>
                     </div>
 
-                    @component('_components.filters-alert', [
+                    @component('_components.alert-filters-applied', [
                         'filter_list' => App\Models\Bond::$accepted_filters,
                         'edit_function' =>"showFiltersModal();",
                         'reset_route' => route('bond.index' ),
@@ -91,8 +83,8 @@
     </div>
 </div>
 
-@component('bond._components.deleteBondModal'))@endcomponent
-@component('bond._components.showFiltersModal'))@endcomponent
+@component('bond._components.deleteBondModal')@endcomponent
+@component('bond._components.showFiltersModal')@endcomponent
 
 @endsection
 
