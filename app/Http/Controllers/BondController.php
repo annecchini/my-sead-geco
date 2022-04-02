@@ -101,7 +101,7 @@ class BondController extends Controller
 
         $success_message = 'Vínculo criado com sucesso.';
         if ($request->input('to') == "person") return redirect()->route('bond.personBondIndex', ['person' => $request->input('person_id')])->with('success_message', $success_message);
-        return redirect()->route('bond.index', ['bond' => $bond->id])->with('success_message', $success_message);
+        return redirect()->route('bond.index')->with('success_message', $success_message);
     }
 
     /**
@@ -190,8 +190,10 @@ class BondController extends Controller
         GeCoLogger::writeLog($bond, 'update');
 
         //redirect to right place
-        if ($request->input('to') == "person") return redirect()->route('bond.personBondIndex', ['person' => $bond->person_id]);
-        return redirect()->route('bond.show', ['bond' => $bond->id]);
+        $success_message = 'Vínculo atualizado com sucesso.';
+        if ($request->input('to') == "person") return redirect()->route('bond.personBondIndex', ['person' => $bond->person_id])->with('success_message', $success_message);
+        if ($request->input('to') == "bond_show") return redirect()->route('bond.show', ['bond' => $bond->id])->with('success_message', $success_message);
+        return redirect()->route('bond.index')->with('success_message', $success_message);
     }
 
     /**
@@ -204,17 +206,15 @@ class BondController extends Controller
     {
         //cant delete if...
 
-        //preserve $bond data for future operations
-        $b = $bond->replicate();
-        $b->id = $bond->id;
-
         //delete
         $bond->delete();
 
         //log delete
-        GeCoLogger::writeLog($b, 'destroy');
+        GeCoLogger::writeLog($bond, 'destroy');
 
-        if ($request->input('to') == "person") return redirect()->route('bond.personBondIndex', ['person' => $b->person_id]);
-        return redirect()->route('bond.index');
+        //redirect to right place
+        $success_message = 'Vínculo excluído com sucesso.';
+        if ($request->input('to') == "person") return redirect()->route('bond.personBondIndex', ['person' => $bond->person_id])->with('success_message', $success_message);
+        return redirect()->route('bond.index')->with('success_message', $success_message);
     }
 }

@@ -12,7 +12,7 @@
 
                 <div class="card-body">
 
-                    <form method="POST" action="{{ route('user.update', ['user'=>$user->id]) }}">
+                    <form method="POST" action="{{ route('user.update', ['user'=>$user->id, 'to'=>Request::input('from') ]) }}">
 
                         @csrf
 

@@ -109,7 +109,11 @@ class PersonController extends Controller
         //log update
         GeCoLogger::writeLog($person, 'update');
 
-        return redirect()->route('person.show', ['person' => $person->id]);
+
+        //redirect to right place
+        $success_message = 'Colaborador atualizado com sucesso.';
+        if ($request->input('to') == "person_show") return redirect()->route('person.show', ['person' => $person->id])->with('success_message', $success_message);;
+        return redirect()->route('person.index')->with('success_message', $success_message);
     }
 
     /**
@@ -118,12 +122,15 @@ class PersonController extends Controller
      * @param  \App\Models\Person  $person
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Person $person)
+    public function destroy(Request $request, Person $person)
     {
 
         //cant delete if have constraint
         if ($person->users->count()) {
             return redirect()->route('person.index')->withErrors(['message' => 'Erro: Colaborador não pode ser excluido pois possui usuário(s) associado(s).']);
+        }
+        if ($person->bonds->count()) {
+            return redirect()->route('person.index')->withErrors(['message' => 'Erro: Colaborador não pode ser excluido pois possui vínculo(s) associado(s).']);
         }
 
         $person->delete();
@@ -131,6 +138,8 @@ class PersonController extends Controller
         //log delete
         GeCoLogger::writeLog($person, 'destroy');
 
-        return redirect()->route('person.index');
+        //redirect to right place
+        $success_message = 'Colaborador excluído com sucesso.';
+        return redirect()->route('person.index')->with('success_message', $success_message);
     }
 }

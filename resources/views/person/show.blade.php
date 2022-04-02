@@ -7,6 +7,8 @@
 
             @component('person._components.person-navbar',  ['person'=>$person]))@endcomponent
 
+            @component('_components.alert-success')@endcomponent
+
             <div class="card">
 
                 <div class="card-header">
@@ -18,7 +20,7 @@
                     <div class="card-body">
 
                         <div class="mb-1 pr-1 bg-light d-flex justify-content-end">
-                            <a class="ml-1" href="{{route('person.edit', [ 'person'=>$person->id ])}}">Editar</a>
+                            <a class="ml-1" href="{{route('person.edit', [ 'person'=>$person->id, 'from'=>'person_show' ])}}">Editar</a>
                         </div>
 
                         <fieldset disabled>

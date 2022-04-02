@@ -131,7 +131,11 @@ class UserController extends Controller
         //log update
         GeCoLogger::writeLog($user, 'update');
 
-        return redirect()->route('user.show', ['user' => $user->id]);
+
+        //redirect to right place
+        $success_message = 'Usuário atualizado com sucesso.';
+        if ($request->input('to') == "user_show") return redirect()->route('user.show', ['user' => $user->id])->with('success_message', $success_message);
+        return redirect()->route('user.index')->with('success_message', $success_message);
     }
 
     /**
@@ -147,6 +151,7 @@ class UserController extends Controller
         //log destroy
         GeCoLogger::writeLog($user, 'destroy');
 
-        return redirect()->route('user.index', ['message' => 'Usuário excluido com sucesso!']);
+        $success_message = 'Usuário excluído com sucesso.';
+        return redirect()->route('user.index')->with('success_message', $success_message);
     }
 }
