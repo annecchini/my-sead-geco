@@ -29,16 +29,12 @@ class UserController extends Controller
     public function index(Request $request)
     {
         //
-        $users = User::paginate(10);
+        $users_query = new User();
+        $users_query = $users_query->AcceptRequest(User::$accepted_filters)->filter();
+        $users_query = $users_query->sortable(['updated_at' => 'desc']);
 
-        $users = User::sortable(['updated_at' => 'desc'])
-            ->where('email', 'like', '%' . $request->input('email') . '%')
-            ->wherehas('person', function ($query) use ($request) {
-                $query->where('name', 'like', '%' . $request->input('name') . '%');
-            })
-            ->paginate(10);
-
-        $users->appends($request->all());
+        $users = $users_query->paginate(10);
+        $users->withQueryString();
 
         return view('user.index', ['users' => $users]);
     }

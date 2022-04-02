@@ -17,12 +17,12 @@
                 <div class="card-body">
 
                     <div class="mb-1 pr-1 bg-light d-flex justify-content-end">
-                        <a class="ml-2" href="#" onclick="showFiltersModal();">Filtrar</a>
+                        <a class="ml-2" href="#" onclick="showUserFiltersModal();">Filtrar</a>
                         <a class="ml-2" href="{{route('user.create' )}}">Novo</a>
                     </div>
 
                     @component('_components.alert-filters-applied', [
-                        'filter_list' => ['email', 'name'],
+                        'filter_list' => App\Models\User::$accepted_filters,
                         'edit_function' =>"showFiltersModal();",
                         'reset_route' => route('user.index' ),
                     ])@endcomponent
@@ -52,7 +52,7 @@
                                         <a 
                                             title="Excluir"
                                             href="#"
-                                            onclick="showDeleteModal({action:'{{ route('user.destroy', ['user' => $user->id]) }}'});"
+                                            onclick="showDeleteUserModal({action:'{{ route('user.destroy', ['user' => $user->id]) }}'});"
                                         >
                                             <i class="bi bi-trash"></i>
                                         </a>
@@ -78,86 +78,7 @@
     </div>
 </div>
 
-<!-- DeleteModal -->
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <form method="POST" id="deleteForm" action="">
-                @csrf
-                @method('DELETE')
+@component('user._components.deleteUserModal')@endcomponent
+@component('user._components.userFiltersModal')@endcomponent
 
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Excluir usuário</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-
-                <div class="modal-body">
-                    Tem certeza que deseja remover este usuário?
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Não! Cancelar</button>
-                    <button type="submit" class="btn btn-danger">Sim! Confirmar</button>
-                </div>
-
-            </form>
-        </div>
-    </div>
-</div>
-
-<!-- showFilters Modal -->
-<div class="modal fade" id="filtersModal" tabindex="-1" role="dialog" aria-labelledby="filtersModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <form method="GET" id="filterForm" action="{{route('user.index')}}">
-
-                <div class="modal-header">
-                    <h5 class="modal-title" id="filtersModalLabel">Fitros</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-
-                <div class="modal-body">
-
-                    <div class="form-group">
-                        <label for="emailInput">E-mail</label>
-                        <input type="text" class="form-control" id="emailInput" name="email" value="{{ app('request')->input('email') }}">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="nameInput">Colaborador</label>
-                        <input type="text" class="form-control"
-                            id="nameInput" name="name" value="{{ app('request')->input('name') }}">
-                    </div>
-
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Aplicar filtros</button>
-                </div>
-
-            </form>
-        </div>
-    </div>
-</div>
-
-@endsection
-
-@section('page-js-script')
-<script type="text/javascript">
-    function showDeleteModal(options){
-        $('#deleteForm').attr('action', options.action);
-        $('#deleteModal').modal('show');
-    }
-
-    function showFiltersModal(){
-        $('#filtersModal').modal('show');
-    }
-</script>
 @endsection

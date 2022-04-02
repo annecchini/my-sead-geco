@@ -8,12 +8,15 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use OwenIt\Auditing\Contracts\Auditable;
 use Kyslik\ColumnSortable\Sortable;
+use eloquentFilter\QueryFilter\ModelFilters\Filterable;
+use App\ModelFilters\UserFilters;
 
 
 class User extends Authenticatable implements Auditable
 {
     use HasFactory, Notifiable;
     use \OwenIt\Auditing\Auditable;
+    use Filterable, UserFilters;
     use Sortable;
 
     protected $auditInclude = [
@@ -23,6 +26,12 @@ class User extends Authenticatable implements Auditable
     ];
 
     public $sortable = ['id', 'email', 'created_at', 'updated_at'];
+
+    public static $accepted_filters = [
+        'email_like',
+        'person_like'
+    ];
+    private static $whiteListFilter = ['*'];
 
     /**
      * The attributes that are mass assignable.

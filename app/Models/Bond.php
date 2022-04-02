@@ -16,8 +16,8 @@ class Bond extends Model implements Auditable
 {
     use HasFactory;
     use \OwenIt\Auditing\Auditable;
-    use Sortable;
     use Filterable, BondFilters;
+    use Sortable;
 
     protected $fillable = ['person_id', 'ocupation_id', 'begin', 'end', 'course_id', 'pole_id'];
     protected $auditInclude = ['id', 'person_id', 'ocupation_id', 'begin', 'end', 'course_id', 'pole_id'];
