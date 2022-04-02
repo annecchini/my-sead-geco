@@ -23,7 +23,7 @@
 
                     @component('_components.alert-filters-applied', [
                         'filter_list' => App\Models\User::$accepted_filters,
-                        'edit_function' =>"showFiltersModal();",
+                        'edit_function' =>"showUserFiltersModal();",
                         'reset_route' => route('user.index' ),
                     ])@endcomponent
 

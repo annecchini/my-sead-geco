@@ -7,17 +7,24 @@ use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 use Kyslik\ColumnSortable\Sortable;
 use Illuminate\Support\Facades\DB;
-
+use eloquentFilter\QueryFilter\ModelFilters\Filterable;
+use App\ModelFilters\PersonFilters;
 
 class Person extends Model implements Auditable
 {
     use HasFactory;
     use \OwenIt\Auditing\Auditable;
+    use Filterable, PersonFilters;
     use Sortable;
 
     protected $fillable = ['name', 'cpf'];
     protected $auditInclude = ['id', 'name', 'cpf'];
     public $sortable = ['id', 'name', 'cpf', 'created_at', 'updated_at'];
+    public static $accepted_filters = [
+        'cpf_like',
+        'name_like',
+    ];
+    private static $whiteListFilter = ['*'];
 
     public function users()
     {

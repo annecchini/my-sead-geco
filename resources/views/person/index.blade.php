@@ -17,13 +17,13 @@
                 <div class="card-body">
 
                     <div class="mb-1 pr-1 bg-light d-flex justify-content-end">
-                        <a class="ml-2" href="#" onclick="showFiltersModal();">Filtrar</a>
+                        <a class="ml-2" href="#" onclick="showPersonFiltersModal();">Filtrar</a>
                         <a class="ml-2" href="{{route('person.create' )}}">Novo</a>
                     </div>
                     
                     @component('_components.alert-filters-applied', [
-                        'filter_list' => ['name', 'cpf'],
-                        'edit_function' =>"showFiltersModal();",
+                        'filter_list' => App\Models\Person::$accepted_filters,
+                        'edit_function' =>"showPersonFiltersModal();",
                         'reset_route' => route('person.index' ),
                     ])@endcomponent
                                         
@@ -47,7 +47,7 @@
                                         <a title="Ver" href="{{ route('person.show', ['person' => $person->id]) }}"><i class="bi bi bi-search"></i></a>
                                         <a title="Editar" href="{{ route('person.edit', ['person' => $person->id]) }}"><i class="bi bi bi-pencil"></i></a>
                                         <a title="Excluir" href="#"
-                                            onclick="showDeleteModal({action:'{{ route('person.destroy', ['person' => $person->id]) }}'});">
+                                            onclick="showDeletePersonModal({action:'{{ route('person.destroy', ['person' => $person->id]) }}'});">
                                             <i class="bi bi bi-trash"></i>
                                         </a>
                                     </td>
@@ -72,86 +72,7 @@
     </div>
 </div>
 
-<!-- DeletePerson Modal -->
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="personModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <form method="POST" id="deleteForm" action="">
-                @csrf
-                @method('DELETE')
+@component('person._components.deletePersonModal')@endcomponent
+@component('person._components.showPersonFiltersModal')@endcomponent
 
-                <div class="modal-header">
-                    <h5 class="modal-title" id="personModalLabel">Excluir colaborador</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-
-                <div class="modal-body">
-                    Tem certeza que deseja remover este colaborador?
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Não! Cancelar</button>
-                    <button type="submit" class="btn btn-danger">Sim! Confirmar</button>
-                </div>
-
-            </form>
-        </div>
-    </div>
-</div>
-
-<!-- showFilters Modal -->
-<div class="modal fade" id="filtersModal" tabindex="-1" role="dialog" aria-labelledby="filtersModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <form method="GET" id="filterForm" action="{{route('person.index')}}">
-
-                <div class="modal-header">
-                    <h5 class="modal-title" id="filtersModalLabel">Fitros</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-
-                <div class="modal-body">
-
-                    <div class="form-group">
-                        <label for="cpfInput">CPF</label>
-                        <input type="text" class="form-control" id="cpfInput" name="cpf" value="{{ app('request')->input('cpf') }}">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="nameInput">Nome</label>
-                        <input type="text" class="form-control"
-                            id="nameInput" name="name" value="{{ app('request')->input('name') }}">
-                    </div>
-
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Aplicar filtros</button>
-                </div>
-
-            </form>
-        </div>
-    </div>
-</div>
-
-@endsection
-
-@section('page-js-script')
-<script type="text/javascript">
-    function showDeleteModal(options){
-        $('#deleteForm').attr('action', options.action);
-        $('#deleteModal').modal('show');
-    }
-
-    function showFiltersModal(){
-        $('#filtersModal').modal('show');
-    }
-</script>
 @endsection

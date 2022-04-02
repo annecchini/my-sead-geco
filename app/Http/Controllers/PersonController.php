@@ -25,12 +25,20 @@ class PersonController extends Controller
      */
     public function index(Request $request)
     {
-        $people = Person::sortable(['updated_at' => 'desc'])
-            ->where('cpf', 'like', '%' . $request->input('cpf') . '%')
-            ->where('name', 'like', '%' . $request->input('name') . '%')
-            ->paginate(10);
 
-        $people->appends($request->all());
+        $people_query = new Person();
+        $people_query = $people_query->AcceptRequest(Person::$accepted_filters)->filter();
+        $people_query = $people_query->sortable(['updated_at' => 'desc']);
+
+        $people = $people_query->paginate(10);
+        $people->withQueryString();
+
+        // $people = Person::sortable(['updated_at' => 'desc'])
+        //     ->where('cpf', 'like', '%' . $request->input('cpf') . '%')
+        //     ->where('name', 'like', '%' . $request->input('name') . '%')
+        //     ->paginate(10);
+
+        // $people->appends($request->all());
 
         return view('person.index', ['people' => $people]);
     }
