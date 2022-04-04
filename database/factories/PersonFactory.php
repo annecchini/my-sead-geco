@@ -22,8 +22,9 @@ class PersonFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name(),
-            'cpf' => $this->faker->cpf()
+            'name' => $this->faker->first_name() . ' ' . $this->faker->last_name(),
+            'cpf' => $this->faker->cpf(),
+            'mother_name' => rand(1, 100) > 30 ? $this->faker->first_name('female') . ' ' . $this->faker->last_name() : null
         ];
     }
 }

@@ -25,20 +25,13 @@ class PersonController extends Controller
      */
     public function index(Request $request)
     {
-
+        //
         $people_query = new Person();
         $people_query = $people_query->AcceptRequest(Person::$accepted_filters)->filter();
         $people_query = $people_query->sortable(['updated_at' => 'desc']);
 
         $people = $people_query->paginate(10);
         $people->withQueryString();
-
-        // $people = Person::sortable(['updated_at' => 'desc'])
-        //     ->where('cpf', 'like', '%' . $request->input('cpf') . '%')
-        //     ->where('name', 'like', '%' . $request->input('name') . '%')
-        //     ->paginate(10);
-
-        // $people->appends($request->all());
 
         return view('person.index', ['people' => $people]);
     }
@@ -72,7 +65,7 @@ class PersonController extends Controller
         GeCoLogger::writeLog($person, 'create');
 
         $success_message = 'Colaborador criado com sucesso.';
-        return redirect()->route('person.index', ['person' => $person->id])->with('success_message', $success_message);
+        return redirect()->route('person.index')->with('success_message', $success_message);
     }
 
     /**

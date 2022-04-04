@@ -17,12 +17,13 @@ class Person extends Model implements Auditable
     use Filterable, PersonFilters;
     use Sortable;
 
-    protected $fillable = ['name', 'cpf'];
+    protected $fillable = ['name', 'cpf', 'mother_name'];
     protected $auditInclude = ['id', 'name', 'cpf'];
-    public $sortable = ['id', 'name', 'cpf', 'created_at', 'updated_at'];
+    public $sortable = ['id', 'name', 'cpf', 'mother_name',  'created_at', 'updated_at'];
     public static $accepted_filters = [
         'cpf_like',
         'name_like',
+        'mother_name_like'
     ];
     private static $whiteListFilter = ['*'];
 

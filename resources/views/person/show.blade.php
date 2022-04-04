@@ -35,6 +35,12 @@
                                 <input type="text" class="form-control" id="cpfInput" name="cpf"
                                     value="{{ $person->cpf }}">
                             </div>
+
+                            <div class="form-group">
+                                <label for="mother_nameInput">Nome da mãe</label>
+                                <input type="text" class="form-control" id="mother_nameInput" name="mother_name"
+                                    value="{{ $person->mother_name ? $person->mother_name : 'Não definido' }}">
+                            </div>
                         </fieldset>
 
                     </div>

@@ -34,6 +34,15 @@
                             @endif
                         </div>
 
+                        <div class="form-group">
+                            <label for="mother_nameInput">Nome da mãe</label>
+                            <input type="text" class="form-control {{ $errors->has('mother_name') ? 'is-invalid' : ''}}"
+                                id="cpfInput" name="mother_name" value="{{ old('mother_name', '') }}">
+                            @if( $errors->has('mother_name') )
+                            <div class="invalid-feedback">{{ $errors->first('mother_name') }}</div>
+                            @endif
+                        </div>
+
                         <button type="submit" class="btn btn-primary">Cadastrar</button>
                     </form>
 

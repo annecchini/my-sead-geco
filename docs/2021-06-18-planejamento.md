@@ -2,11 +2,10 @@
 
 # Possiveis para trás
 
--   Implementar novo sistema de filtros em user e person.
 -   operações como transações e mensagens de erro.
--   unificar campos date e time em um unico campo.
--   componentizar date/time field?
 -   Implementar um PersonPicker melhor em UserCreate e UserUpdate.
+-   unificar campos date e time em um unico campo?
+-   componentizar date/time field?
 
 # Possiveis passos para frente
 
