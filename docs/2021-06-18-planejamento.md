@@ -10,6 +10,7 @@
 -   operações como transações e mensagens de erro.
 -   unificar campos date e time em um unico campo?
 -   componentizar date/time field?
+-   trocar Str:ramdom por Uuid::uuidv4? no codigo e banco da API.
 
 # Possiveis passos para frente
 

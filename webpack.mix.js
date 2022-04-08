@@ -12,7 +12,8 @@ const mix = require("laravel-mix");
  */
 
 mix.js("resources/js/app.js", "public/js")
-    .js("resources/js/person/create.update.js", "public/js/person")
-    .js("resources/js/user/update.js", "public/js/user")
+    .copy("resources/js/person/*", "public/js/person")
+    .copy("resources/js/user/*", "public/js/user")
+    .copy("resources/js/bond/*", "public/js/bond")
     .sass("resources/sass/app.scss", "public/css")
     .sourceMaps();

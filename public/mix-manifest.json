@@ -1,6 +1,9 @@
 {
     "/js/app.js": "/js/app.js",
-    "/js/person/create.update.js": "/js/person/create.update.js",
-    "/js/user/update.js": "/js/user/update.js",
-    "/css/app.css": "/css/app.css"
+    "/css/app.css": "/css/app.css",
+    "/js/person/create.edit.js": "/js/person/create.edit.js",
+    "/js/user/create.js": "/js/user/create.js",
+    "/js/user/edit.js": "/js/user/edit.js",
+    "/js/bond/create.js": "/js/bond/create.js",
+    "/js/bond/edit.js": "/js/bond/edit.js"
 }
