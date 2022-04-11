@@ -1,16 +1,11 @@
 # tarefas atuais
 
--   Implementar um PersonPicker melhor em UserCreate e UserUpdate e bonds.
-    -- datalist: Estranho e permite enviar valores que não estão na lista.
-    -- selectise.js Pode ser interessante.
-    --
-
 # Possiveis para trás
 
--   operações como transações e mensagens de erro.
--   unificar campos date e time em um unico campo?
 -   componentizar date/time field?
--   trocar Str:ramdom por Uuid::uuidv4? no codigo e banco da API.
+-   operações como transações e mensagens de erro.
+-   Renomear bond para workbond em todo o sistema.
+-   unificar campos date e time em um unico campo?
 
 # Possiveis passos para frente
 

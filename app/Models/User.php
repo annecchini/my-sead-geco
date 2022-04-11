@@ -11,6 +11,7 @@ use Kyslik\ColumnSortable\Sortable;
 use eloquentFilter\QueryFilter\ModelFilters\Filterable;
 use App\ModelFilters\UserFilters;
 use Illuminate\Support\Str;
+use Ramsey\Uuid\Uuid;
 
 class User extends Authenticatable implements Auditable
 {
@@ -102,7 +103,8 @@ class User extends Authenticatable implements Auditable
     //Function to generate api_token used by API.
     public function generateToken()
     {
-        $this->api_token = Str::random(60);
+        $this->api_token = Uuid::uuid4();
+        //$this->api_token = Str::random(60);
         $this->save();
         return $this->api_token;
     }
