@@ -16,7 +16,7 @@
 
                         @csrf
 
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label for="personInput">Colaborador *</label>
                             <select id="personInput"
                                 class="form-control {{ $errors->has('person_id') ? 'is-invalid' : ''}}"
@@ -38,9 +38,23 @@
                             @if( $errors->has('person_id') )
                             <div class="invalid-feedback">{{ $errors->first('person_id') }}</div>
                             @endif
-                        </div>
+                        </div> --}}
 
-                        <div class="form-group">
+                        @component( '_components.select-input', [
+                                'inputId'=>'personInput',
+                                'inputName'=>'person_id',
+                                'inputLabel'=>'Colaborador responsável *',
+                                'inputEmptyOption'=>'-- Selecione um colaborador --', //opcional
+                                'itemList'=> $people,
+                                //'optionValueFunction'=> function ($item) { return $item->id; }, //opcional
+                                'optionNameFunction'=> function ($item) { return $item->name." (".$item->cpf.")"; }, //opcional                             
+                                'errorList'=> $errors,
+                                //'errorField'=>'person_id', //opcional
+                                //'resourceToUpdateValue'=>$bond->person_id, //opcional
+                        ] )@endcomponent
+
+
+                        {{-- <div class="form-group">
                             <label for="ocupationInput">Ocupação *</label>
                             <select id="ocupationInput"
                                 class="form-control {{ $errors->has('ocupation_id') ? 'is-invalid' : ''}}"
@@ -56,9 +70,22 @@
                             @if( $errors->has('ocupation_id') )
                             <div class="invalid-feedback">{{ $errors->first('ocupation_id') }}</div>
                             @endif
-                        </div>
+                        </div> --}}
 
-                        <div class="form-row">
+                        @component( '_components.select-input', [
+                            'inputId'=>'ocupationInput',
+                            'inputName'=>'ocupation_id',
+                            'inputLabel'=>'Ocupação *',
+                            'inputEmptyOption'=>'-- Selecione uma ocupação --', //opcional
+                            'itemList'=> $ocupations,
+                            //'optionValueFunction'=> function ($item) { return $item->id; }, //opcional
+                            //'optionNameFunction'=> function ($item) { return $item->name; }, //opcional                             
+                            'errorList'=> $errors,
+                            //'errorField'=>'person_id', //opcional
+                            //'resourceToUpdateValue'=>$bond->person_id, //opcional
+                        ] )@endcomponent
+
+                        {{-- <div class="form-row">
                             <div class="form-group col-6">
                                 <label for="beginDateInput">Inicio *</label>
                                 <input class="form-control {{ $errors->has('begin-date') ? 'is-invalid' : ''}}" id="beginDateInput" type="date" value="{{ old('begin-date')}}" name="begin-date">
@@ -74,9 +101,27 @@
                                     <div class="invalid-feedback">{{ $errors->first('begin-time') }}</div>
                                 @endif
                             </div>
-                        </div>
+                        </div> --}}
 
-                        <div class="form-row">
+                        @component( '_components.date-time-input', [
+                            'dateId'=>'beginDateInput',
+                            'dateLabel'=>'Inicio *',
+                            'dateName'=>'begin-date',
+                            'dateDefaultValue'=>\Carbon\Carbon::now()->format('Y-m-d'), //opcional
+                            //'dateResourceValue'=>'', //opcional
+                            
+                            'timeId'=>'beginTimeInput',
+                            'timeLabel'=>'*',
+                            'timeName'=>'begin-time',
+                            'timeDefaultValue'=>'00:00:00',  //opcional
+                            //'timeResourceValue'=>'', //opcional
+
+                            'errorList'=>$errors,
+                            //'errorDateField'=>'', //opcional,
+                            //'errorTimeField'=>'', //opcional,
+                        ] )@endcomponent
+
+                        {{-- <div class="form-row">
                             <div class="form-group col-6">
                                 <label for="endDateInput">Fim</label>
                                 <input class="form-control {{ $errors->has('end-date') ? 'is-invalid' : ''}}" id="endDateInput" type="date" value="{{ old('end-date')}}" name="end-date">
@@ -92,9 +137,27 @@
                                     <div class="invalid-feedback">{{ $errors->first('end-time') }}</div>
                                 @endif
                             </div>
-                        </div>
+                        </div> --}}
 
-                        <div class="form-group">
+                        @component( '_components.date-time-input', [
+                            'dateId'=>'endDateInput',
+                            'dateLabel'=>'Fim *',
+                            'dateName'=>'end-date',
+                            //'dateDefaultValue'=>\Carbon\Carbon::now()->format('Y-m-d'), //opcional
+                            //'dateResourceValue'=>'', //opcional
+                            
+                            'timeId'=>'endTimeInput',
+                            'timeLabel'=>'*',
+                            'timeName'=>'end-time',
+                            'timeDefaultValue'=>'23:59:59',  //opcional
+                            //'timeResourceValue'=>'', //opcional
+
+                            'errorList'=>$errors,
+                            //'errorDateField'=>'', //opcional,
+                            //'errorTimeField'=>'', //opcional,
+                        ] )@endcomponent
+
+                        {{-- <div class="form-group">
                             <label for="courseInput">Curso</label>
                             <select id="courseInput"
                                 class="form-control {{ $errors->has('course_id') ? 'is-invalid' : ''}}"
@@ -110,9 +173,22 @@
                             @if( $errors->has('course_id') )
                             <div class="invalid-feedback">{{ $errors->first('course_id') }}</div>
                             @endif
-                        </div>
+                        </div> --}}
 
-                        <div class="form-group">
+                        @component( '_components.select-input', [
+                            'inputId'=>'courseInput',
+                            'inputName'=>'course_id',
+                            'inputLabel'=>'Curso',
+                            'inputEmptyOption'=>'-- Selecione um curso --', //opcional
+                            'itemList'=> $courses,
+                            //'optionValueFunction'=> function ($item) { return $item->id; }, //opcional
+                            //'optionNameFunction'=> function ($item) { return $item->name; }, //opcional                             
+                            'errorList'=> $errors,
+                            //'errorField'=>'person_id', //opcional
+                            //'resourceToUpdateValue'=>$bond->person_id, //opcional
+                        ] )@endcomponent
+
+                        {{-- <div class="form-group">
                             <label for="poleInput">Local</label>
                             <select id="poleInput"
                                 class="form-control {{ $errors->has('pole_id') ? 'is-invalid' : ''}}"
@@ -128,7 +204,20 @@
                             @if( $errors->has('pole_id') )
                             <div class="invalid-feedback">{{ $errors->first('pole_id') }}</div>
                             @endif
-                        </div>
+                        </div> --}}
+
+                        @component( '_components.select-input', [
+                            'inputId'=>'poleInput',
+                            'inputName'=>'pole_id',
+                            'inputLabel'=>'Local',
+                            'inputEmptyOption'=>'-- Selecione um local --', //opcional
+                            'itemList'=> $locations,
+                            //'optionValueFunction'=> function ($item) { return $item->id; }, //opcional
+                            //'optionNameFunction'=> function ($item) { return $item->name; }, //opcional                             
+                            'errorList'=> $errors,
+                            //'errorField'=>'person_id', //opcional
+                            //'resourceToUpdateValue'=>$bond->person_id, //opcional
+                        ] )@endcomponent
 
                         <button type="submit" class="btn btn-primary">Cadastrar</button>
 
@@ -143,4 +232,8 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('page-js-files')
+<script src="{{ asset('js/bond/create.js') }}" defer></script>
 @endsection

@@ -59,5 +59,5 @@
 @endsection
 
 @section('page-js-files')
-<script src="{{ asset('js/person/create.update.js') }}" defer></script>
+<script src="{{ asset('js/person/create.edit.js') }}" defer></script>
 @endsection

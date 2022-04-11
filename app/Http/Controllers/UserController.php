@@ -59,7 +59,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
 
-        dd($request->all());
+        // dd($request->all());
 
         //field validation
         $request->validate($this->user->rules(), $this->user->feedback());

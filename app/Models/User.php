@@ -10,7 +10,8 @@ use OwenIt\Auditing\Contracts\Auditable;
 use Kyslik\ColumnSortable\Sortable;
 use eloquentFilter\QueryFilter\ModelFilters\Filterable;
 use App\ModelFilters\UserFilters;
-
+use Illuminate\Support\Str;
+use Ramsey\Uuid\Uuid;
 
 class User extends Authenticatable implements Auditable
 {
@@ -97,5 +98,13 @@ class User extends Authenticatable implements Auditable
             'email.unique' => 'O email já existe no banco de dados.',
             'password.min' => 'A senha deve possuir pelo menos :min caracteres.'
         ];
+    }
+
+    //Function to generate api_token used by API.
+    public function generateToken()
+    {
+        $this->api_token = Uuid::uuid4();
+        $this->save();
+        return $this->api_token;
     }
 }
