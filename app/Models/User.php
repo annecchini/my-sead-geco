@@ -104,7 +104,6 @@ class User extends Authenticatable implements Auditable
     public function generateToken()
     {
         $this->api_token = Uuid::uuid4();
-        //$this->api_token = Str::random(60);
         $this->save();
         return $this->api_token;
     }

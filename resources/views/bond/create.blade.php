@@ -85,7 +85,7 @@
                             //'resourceToUpdateValue'=>$bond->person_id, //opcional
                         ] )@endcomponent
 
-                        <div class="form-row">
+                        {{-- <div class="form-row">
                             <div class="form-group col-6">
                                 <label for="beginDateInput">Inicio *</label>
                                 <input class="form-control {{ $errors->has('begin-date') ? 'is-invalid' : ''}}" id="beginDateInput" type="date" value="{{ old('begin-date')}}" name="begin-date">
@@ -101,9 +101,27 @@
                                     <div class="invalid-feedback">{{ $errors->first('begin-time') }}</div>
                                 @endif
                             </div>
-                        </div>
+                        </div> --}}
 
-                        <div class="form-row">
+                        @component( '_components.date-time-input', [
+                            'dateId'=>'beginDateInput',
+                            'dateLabel'=>'Inicio *',
+                            'dateName'=>'begin-date',
+                            'dateDefaultValue'=>\Carbon\Carbon::now()->format('Y-m-d'), //opcional
+                            //'dateResourceValue'=>'', //opcional
+                            
+                            'timeId'=>'beginTimeInput',
+                            'timeLabel'=>'*',
+                            'timeName'=>'begin-time',
+                            'timeDefaultValue'=>'00:00:00',  //opcional
+                            //'timeResourceValue'=>'', //opcional
+
+                            'errorList'=>$errors,
+                            //'errorDateField'=>'', //opcional,
+                            //'errorTimeField'=>'', //opcional,
+                        ] )@endcomponent
+
+                        {{-- <div class="form-row">
                             <div class="form-group col-6">
                                 <label for="endDateInput">Fim</label>
                                 <input class="form-control {{ $errors->has('end-date') ? 'is-invalid' : ''}}" id="endDateInput" type="date" value="{{ old('end-date')}}" name="end-date">
@@ -119,7 +137,25 @@
                                     <div class="invalid-feedback">{{ $errors->first('end-time') }}</div>
                                 @endif
                             </div>
-                        </div>
+                        </div> --}}
+
+                        @component( '_components.date-time-input', [
+                            'dateId'=>'endDateInput',
+                            'dateLabel'=>'Fim *',
+                            'dateName'=>'end-date',
+                            //'dateDefaultValue'=>\Carbon\Carbon::now()->format('Y-m-d'), //opcional
+                            //'dateResourceValue'=>'', //opcional
+                            
+                            'timeId'=>'endTimeInput',
+                            'timeLabel'=>'*',
+                            'timeName'=>'end-time',
+                            'timeDefaultValue'=>'23:59:59',  //opcional
+                            //'timeResourceValue'=>'', //opcional
+
+                            'errorList'=>$errors,
+                            //'errorDateField'=>'', //opcional,
+                            //'errorTimeField'=>'', //opcional,
+                        ] )@endcomponent
 
                         {{-- <div class="form-group">
                             <label for="courseInput">Curso</label>
