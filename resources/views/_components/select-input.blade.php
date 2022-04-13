@@ -25,7 +25,7 @@
         @foreach ( $itemList as $item )
             @php $optionValue = isset($optionValueFunction) ? $optionValueFunction($item) : $item->id; @endphp
             @php $optionName = isset($optionNameFunction) ? $optionNameFunction($item) : $item->name; @endphp
-            @php $selectedValue = !isset($resourceToUpdateValue) ? old( $inputName ) : old( $inputName , $resourceToUpdateValue); @endphp
+            @php $selectedValue = isset($resourceToUpdateValue) && $resourceToUpdateValue ? old( $inputName , $resourceToUpdateValue) : old( $inputName, '' ); @endphp
             <option value="{{ $optionValue }}" {{ $selectedValue == $optionValue ? 'selected' : '' }}>
                 {{$optionName}}
             </option>

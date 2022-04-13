@@ -143,4 +143,14 @@ class PersonController extends Controller
         $success_message = 'Colaborador excluído com sucesso.';
         return redirect()->route('person.index')->with('success_message', $success_message);
     }
+
+
+    public function personInternalNoteIndex(Person $person)
+    {
+        //
+        $internalNotes = $person->internalNotes;
+        //$internalNotes = $person->bonds();
+        //dd($internalNotes);
+        return view('person.InternalNote.index', ['person' => $person, 'internalNotes' =>  $internalNotes]);
+    }
 }

@@ -2,7 +2,8 @@
     $items = [
         ['label'=>'Dados', 'route'=>route('person.show', [ 'person'=>$person->id ])],
         ['label'=>'Documentos', 'route'=>route('document.personDocumentIndex', [ 'person'=>$person->id ])],
-        ['label'=>'Vínculos', 'route'=>route('bond.personBondIndex', [ 'person'=>$person->id ])]
+        ['label'=>'Vínculos', 'route'=>route('bond.personBondIndex', [ 'person'=>$person->id ])],
+        ['label'=>'Notas Internas', 'route'=>route('person.internalNote.index', [ 'person'=>$person->id ])]
     ]
 @endphp
 

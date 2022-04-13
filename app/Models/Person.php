@@ -48,6 +48,16 @@ class Person extends Model implements Auditable
         return  $resultQuery;
     }
 
+    public function internalNotes()
+    {
+        $resultQuery = $this
+            ->hasMany('App\Models\InternalNote', 'model_id')
+            ->where('model_name', get_class($this))
+            ->orderBy('updated_at', 'DESC');
+
+        return $resultQuery;
+    }
+
     public function rules()
     {
         return [

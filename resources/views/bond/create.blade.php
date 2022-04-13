@@ -47,10 +47,10 @@
                                 'inputEmptyOption'=>'-- Selecione um colaborador --', //opcional
                                 'itemList'=> $people,
                                 //'optionValueFunction'=> function ($item) { return $item->id; }, //opcional
-                                'optionNameFunction'=> function ($item) { return $item->name." (".$item->cpf.")"; }, //opcional                             
+                                'optionNameFunction'=> function ($item) { return $item->name." (".$item->cpf.")"; }, //opcional
                                 'errorList'=> $errors,
                                 //'errorField'=>'person_id', //opcional
-                                //'resourceToUpdateValue'=>$bond->person_id, //opcional
+                                'resourceToUpdateValue'=> app('request')->input('person_id') //opcional
                         ] )@endcomponent
 
 
